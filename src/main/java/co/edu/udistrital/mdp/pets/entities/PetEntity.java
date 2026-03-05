@@ -27,6 +27,8 @@ public class PetEntity extends BaseEntity{
     @PodamExclude
     @OneToMany(mappedBy="pet")
     private List<MedicalEventEntity>medicalEvents;
-    
 
+    @PodamExclude
+    @OneToMany(mappedBy="pet")
+    private List<VaccinationRecordEntity>vaccinationRecords;
 }
