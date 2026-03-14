@@ -8,12 +8,11 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
 
-
 @Data
 @Entity
 
-public class PetEntity extends BaseEntity{
-    
+public class PetEntity extends BaseEntity {
+
     private String name;
     private String species;
     private String breed;
@@ -25,10 +24,14 @@ public class PetEntity extends BaseEntity{
     private String specificRequirements;
 
     @PodamExclude
-    @OneToMany(mappedBy="pet")
-    private List<MedicalEventEntity>medicalEvents;
+    @OneToMany(mappedBy = "pet")
+    private List<MedicalEventEntity> medicalEvents;
 
     @PodamExclude
-    @OneToMany(mappedBy="pet")
-    private List<VaccinationRecordEntity>vaccinationRecords;
+    @OneToMany(mappedBy = "pet")
+    private List<VaccinationRecordEntity> vaccinationRecords;
+
+    @PodamExclude
+    @OneToMany(mappedBy = "pet")
+    private List<MediaFileEntity> photographes;
 }

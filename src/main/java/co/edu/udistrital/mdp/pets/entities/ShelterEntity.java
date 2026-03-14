@@ -12,11 +12,13 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 public class ShelterEntity extends BaseEntity {
 
-    String name;
-    String city;
-    String address;
-    String pictures;
-    String videos;
+    private String name;
+    private String city;
+    private String address;
+
+    @PodamExclude
+    @OneToMany(mappedBy="shelter")
+    private List<MediaFileEntity> mediaFiles;   //this includes photographes and videos
 
     //Asociations with Events and Messages.
     @PodamExclude
