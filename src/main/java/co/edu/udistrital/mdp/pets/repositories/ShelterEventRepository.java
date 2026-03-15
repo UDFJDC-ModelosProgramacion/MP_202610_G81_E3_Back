@@ -11,5 +11,7 @@ public interface ShelterEventRepository extends JpaRepository <ShelterEventEntit
     //Busqueda por nombre.
     List<ShelterEventEntity> findByNameContainingIgnoreCase(String name);
     //Busqueda por rango de fechas.
-    List<ShelterEventEntity> findByFechaBetween(LocalDate startDate,LocalDate endDate);
+    List<ShelterEventEntity> findByDateBetween(LocalDate startDate,LocalDate endDate);
+    //Busqueda por fechas.
+    List<ShelterEventEntity> findByDate(LocalDate startDate);
 }
