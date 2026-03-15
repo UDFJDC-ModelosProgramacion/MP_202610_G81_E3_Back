@@ -1,5 +1,6 @@
 package co.edu.udistrital.mdp.pets.services;
 
+import org.modelmapper.spi.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,5 +106,24 @@ public class ShelterService {
 
         log.info("End update shelter with the id: {}", shelterId);
         return shelterRepository.save(shelterToUpdate);
+    }
+
+    //Metodo para borrar un refugio existente.
+    @Transactional
+    public void deleteShelter(Long shelterId) 
+    throws EntityNotFoundException, IllegalOperationException{
+        log.info("Start shelter delete with the id: {}", shelterId);
+
+        //Busca el refugio.
+        Optional<ShelterEntity> shelterEntity = shelterRepository.findById(shelterId);
+
+        //Verifica que el refugio exista.
+        if(shelterEntity.isEmpty())
+            throw new EntityNotFoundException (ErrorMessage.SHELTER_NOT_FOUND);
+
+        //Aqui hay que agregar la condicion de los eventos.
+        //Para ello se trabaja en otra rama los shelter event service.
+        shelterRepository.deleteById(shelterId);
+        log.info("End delete shelter process with id: {}", shelterId);
     }
 }
