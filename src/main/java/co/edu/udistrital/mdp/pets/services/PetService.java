@@ -1,5 +1,7 @@
 package co.edu.udistrital.mdp.pets.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +31,68 @@ public class PetService {
             return petRepository.save(petEntity);
 
         } else {
-            throw new IllegalOperationException("All fields must be filled in");
+            throw new IllegalOperationException("todos los campos tienen que estar llenos");
         }
 
+    }
+
+    @Transactional
+    public PetEntity updatePet(Long id, PetEntity petEntity) throws EntityNotFoundException {
+        log.info("Inicia proceso de actualización de mascota (Pet)");
+
+        Optional<PetEntity> petOptional = petRepository.findById(id);
+        if (petOptional.isEmpty()) {
+            throw new EntityNotFoundException("Mascota no encontrada");
+        }
+
+        PetEntity existingPet = petOptional.get();
+
+        if (petEntity.getName() != null) {
+            existingPet.setName(petEntity.getName());
+        }
+
+        if (petEntity.getSpecies() != null) {
+            existingPet.setSpecies(petEntity.getSpecies());
+        }
+
+        if (petEntity.getBreed() != null) {
+            existingPet.setBreed(petEntity.getBreed());
+        }
+        if (petEntity.getAge() != null) {
+            existingPet.setAge(petEntity.getAge());
+        }
+        if (petEntity.getSex() != null) {
+            existingPet.setSex(petEntity.getSex());
+        }
+
+        if (petEntity.getSize() != null) {
+            existingPet.setSize(petEntity.getSize());
+        }
+        if (petEntity.getTemperament() != null) {
+            existingPet.setTemperament(petEntity.getTemperament());
+        }
+        if (petEntity.getArriveToShelter() != null) {
+            existingPet.setArriveToShelter(petEntity.getArriveToShelter());
+        }
+
+        if (petEntity.getSpecificRequirements() != null) {
+            existingPet.setSpecificRequirements(petEntity.getSpecificRequirements());
+        }
+
+        log.info("Termina proceso de actualización de mascota (Pet)");
+        return petRepository.save(existingPet);
+    }
+
+    @Transactional
+    public void delatePet(Long petId) throws EntityNotFoundException, IllegalOperationException {
+        log.info("inicia proceso de borrar mascota");
+        Optional<PetEntity> petEntity = petRepository.findById(petId);
+        if (petEntity.isEmpty()) {
+            throw new EntityNotFoundException("mascota no encontrada");
+        }
+
+        petRepository.deleteById(petId);
+        log.info("Proceso de borrado terminado");
     }
 
     private boolean isStringValid(String texto) {
