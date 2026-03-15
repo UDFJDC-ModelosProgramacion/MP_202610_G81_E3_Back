@@ -15,6 +15,7 @@ public class ShelterEntity extends BaseEntity {
     private String name;
     private String city;
     private String address;
+    private String email;
 
     @PodamExclude
     @OneToMany(mappedBy="shelter")

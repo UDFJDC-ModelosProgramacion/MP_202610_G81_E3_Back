@@ -13,7 +13,7 @@ public interface ShelterRepository extends JpaRepository <ShelterEntity, Long>{
     //Búsqueda por nombre ignore case.
     List<ShelterEntity> findByNameContainingIgnoreCase(String name);
     //Búsqueda por nombre.
-    List<ShelterEntity> findByName(String name);
+    Optional<ShelterEntity> findByName(String name);
     //Búsqueda por ciudad.
     List<ShelterEntity> findByCity(String city);
     //Búsqueda por ID.
