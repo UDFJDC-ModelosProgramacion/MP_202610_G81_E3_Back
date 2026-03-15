@@ -1,6 +1,5 @@
 package co.edu.udistrital.mdp.pets.services;
 
-import org.modelmapper.spi.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,9 +76,8 @@ public class ShelterService {
         Optional<ShelterEntity> shelterEntity = shelterRepository.findById(shelterId);
 
         //Verifica su existencia.
-        if(shelterEntity.isEmpty())
+        if (shelterEntity.isEmpty())
             throw new EntityNotFoundException("Shelter not found.");
-
         //Obtiene el refugio a actualizar.
         ShelterEntity shelterToUpdate = shelterEntity.get();
         
@@ -119,7 +117,7 @@ public class ShelterService {
 
         //Verifica que el refugio exista.
         if(shelterEntity.isEmpty())
-            throw new EntityNotFoundException (ErrorMessage.SHELTER_NOT_FOUND);
+            throw new EntityNotFoundException("Shelter not found.");
 
         //Aqui hay que agregar la condicion de los eventos.
         //Para ello se trabaja en otra rama los shelter event service.
