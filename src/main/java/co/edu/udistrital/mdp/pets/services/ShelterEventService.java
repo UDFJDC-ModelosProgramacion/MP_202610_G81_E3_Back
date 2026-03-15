@@ -95,4 +95,24 @@ public class ShelterEventService {
         log.info("End update shelter event with the id: {}", shelterEventId);
         return shelterEventRepository.save(shelterEventToUpdate);
     }
+
+    //Metodo para borrar un evento existente.
+    @Transactional
+    public void deleteShelterEvent(Long shelterEventId) 
+    throws EntityNotFoundException, IllegalOperationException{
+
+        log.info("Start shelter event delete with the id: {}", shelterEventId);
+
+        //Busca el evento.
+        Optional<ShelterEventEntity> shelterEventEntity = shelterEventRepository.findById(shelterEventId);
+
+        //Verifica que el evento exista.
+        if(shelterEventEntity.isEmpty())
+            throw new EntityNotFoundException("Shelter event not found.");
+
+        //Elimina el evento.
+        shelterEventRepository.deleteById(shelterEventId);
+
+        log.info("End delete shelter event process with id: {}", shelterEventId);
+    }
 }
