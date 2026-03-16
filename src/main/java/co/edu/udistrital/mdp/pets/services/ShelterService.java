@@ -123,9 +123,8 @@ public class ShelterService {
         if(!shelterEntity.get().getEvents().isEmpty())
             throw new IllegalOperationException("Cannot delete shelter because it has upcoming events.");
 
-        //Validar que no existan mascotas asociadas al refugio.
-        if(!shelterEntity.get().getPets().isEmpty())
-            throw new IllegalOperationException("Cannot delete shelter because it has pets assigned.");
+        //Queda pendiente validar mascotas.
+
         shelterRepository.deleteById(shelterId);
         log.info("End delete shelter process with id: {}", shelterId);
     }
