@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class ShelterEventEntity extends BaseEntity {
 
-    LocalDate fecha;
+    LocalDate date;
     String name;
     String description;
 
