@@ -119,8 +119,13 @@ public class ShelterService {
         if(shelterEntity.isEmpty())
             throw new EntityNotFoundException("Shelter not found.");
 
-        //Aqui hay que agregar la condicion de los eventos.
-        //Para ello se trabaja en otra rama los shelter event service.
+        //Validar que no existan eventos próximos asociados al refugio.
+        if(!shelterEntity.get().getEvents().isEmpty())
+            throw new IllegalOperationException("Cannot delete shelter because it has upcoming events.");
+
+        //Validar que no existan mascotas asociadas al refugio.
+        if(!shelterEntity.get().getPets().isEmpty())
+            throw new IllegalOperationException("Cannot delete shelter because it has pets assigned.");
         shelterRepository.deleteById(shelterId);
         log.info("End delete shelter process with id: {}", shelterId);
     }
