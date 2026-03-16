@@ -1,6 +1,7 @@
 package co.edu.udistrital.mdp.pets.entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -25,13 +26,13 @@ public class PetEntity extends BaseEntity {
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MedicalEventEntity> medicalEvents;
+    private List<MedicalEventEntity> medicalEvents=new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<VaccinationRecordEntity> vaccinationRecords;
+    private List<VaccinationRecordEntity> vaccinationRecords=new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MediaFileEntity> photographes;
+    private List<MediaFileEntity> photographes=new ArrayList<>();
 }
