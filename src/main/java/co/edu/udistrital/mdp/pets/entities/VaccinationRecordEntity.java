@@ -1,6 +1,6 @@
 package co.edu.udistrital.mdp.pets.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class VaccinationRecordEntity extends BaseEntity{
     private String vaccineName;
-    private Date vaccineDate;
-    private Date nextDosesDate;
+    private LocalDate vaccineDate;
+    private LocalDate nextDosesDate;
     @ManyToOne
     private PetEntity pet;
 
