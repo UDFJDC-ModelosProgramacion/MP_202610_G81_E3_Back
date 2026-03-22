@@ -1,7 +1,6 @@
 package co.edu.udistrital.mdp.pets.entities;
 
-
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -12,7 +11,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Data
 public class MedicalEventEntity extends BaseEntity{
     public String description;
-    public Date date;
+    public LocalDate date;
 
     @PodamExclude
     @ManyToOne
