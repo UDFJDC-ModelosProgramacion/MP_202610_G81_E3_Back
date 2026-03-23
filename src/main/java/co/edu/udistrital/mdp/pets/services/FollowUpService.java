@@ -12,7 +12,9 @@ import co.edu.udistrital.mdp.pets.entities.FollowUpEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.repositories.FollowUpRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class FollowUpService {
 
