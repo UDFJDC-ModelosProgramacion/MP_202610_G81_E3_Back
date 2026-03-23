@@ -10,13 +10,13 @@ import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.ContextConfiguration;
 
+import co.edu.udistrital.mdp.pets.MainApplication;
 import co.edu.udistrital.mdp.pets.entities.MedicalEventEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
@@ -26,6 +26,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(MedicalEventService.class)
+@ContextConfiguration(classes = MainApplication.class)
 class MedicalEventServiceTest {
 
     @Autowired
@@ -35,30 +36,20 @@ class MedicalEventServiceTest {
     private TestEntityManager entityManager;
 
     private PodamFactory factory = new PodamFactoryImpl();
-
     private List<MedicalEventEntity> medicalEventList = new ArrayList<>();
 
-    /**
-     * Configuración inicial de la prueba.
-     */
     @BeforeEach
     void setUp() {
         clearData();
         insertData();
     }
 
-    /**
-     * Limpia las tablas implicadas en la prueba.
-     */
     private void clearData() {
         entityManager.getEntityManager()
                 .createQuery("delete from MedicalEventEntity")
                 .executeUpdate();
     }
 
-    /**
-     * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
-     */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             MedicalEventEntity entity = factory.manufacturePojo(MedicalEventEntity.class);
@@ -69,9 +60,6 @@ class MedicalEventServiceTest {
         }
     }
 
-    /**
-     * Prueba para crear un MedicalEvent con datos válidos.
-     */
     @Test
     void testCreateMedicalEvent() throws Exception {
         MedicalEventEntity newEntity = factory.manufacturePojo(MedicalEventEntity.class);
@@ -87,10 +75,6 @@ class MedicalEventServiceTest {
         assertEquals(newEntity.getDate(), stored.getDate());
     }
 
-    /**
-     * Prueba para crear un MedicalEvent con description nula.
-     * Debe lanzar IllegalOperationException.
-     */
     @Test
     void testCreateMedicalEventNullDescription() {
         assertThrows(IllegalOperationException.class, () -> {
@@ -101,10 +85,6 @@ class MedicalEventServiceTest {
         });
     }
 
-    /**
-     * Prueba para crear un MedicalEvent con description vacía.
-     * Debe lanzar IllegalOperationException.
-     */
     @Test
     void testCreateMedicalEventEmptyDescription() {
         assertThrows(IllegalOperationException.class, () -> {
@@ -115,10 +95,6 @@ class MedicalEventServiceTest {
         });
     }
 
-    /**
-     * Prueba para crear un MedicalEvent con date nulo.
-     * Debe lanzar IllegalOperationException.
-     */
     @Test
     void testCreateMedicalEventNullDate() {
         assertThrows(IllegalOperationException.class, () -> {
@@ -129,9 +105,6 @@ class MedicalEventServiceTest {
         });
     }
 
-    /**
-     * Prueba para actualizar un MedicalEvent existente con todos los campos.
-     */
     @Test
     void testUpdateMedicalEvent() throws Exception {
         MedicalEventEntity existing = medicalEventList.get(0);
@@ -148,10 +121,6 @@ class MedicalEventServiceTest {
         assertEquals(updatedData.getDate(), stored.getDate());
     }
 
-    /**
-     * Prueba para actualizar solo la description.
-     * Los campos nulos no deben modificar los valores originales.
-     */
     @Test
     void testUpdateMedicalEventOnlyDescription() throws Exception {
         MedicalEventEntity existing = medicalEventList.get(1);
@@ -167,10 +136,6 @@ class MedicalEventServiceTest {
         assertEquals(originalDate, stored.getDate());
     }
 
-    /**
-     * Prueba para actualizar un MedicalEvent que no existe.
-     * Debe lanzar EntityNotFoundException.
-     */
     @Test
     void testUpdateInvalidMedicalEvent() {
         assertThrows(EntityNotFoundException.class, () -> {
@@ -179,9 +144,6 @@ class MedicalEventServiceTest {
         });
     }
 
-    /**
-     * Prueba para eliminar un MedicalEvent existente.
-     */
     @Test
     void testDeleteMedicalEvent() throws Exception {
         MedicalEventEntity entity = medicalEventList.get(0);
@@ -191,14 +153,10 @@ class MedicalEventServiceTest {
         assertNull(deleted);
     }
 
-    /**
-     * Prueba para eliminar un MedicalEvent que no existe.
-     * Debe lanzar EntityNotFoundException.
-     */
-    @Test
+@Test
     void testDeleteInvalidMedicalEvent() {
         assertThrows(EntityNotFoundException.class, () -> {
             medicalEventService.delateMedicalEvent(0L);
         });
-    }
+    } 
 }
