@@ -14,5 +14,4 @@ public class VaccinationRecordEntity extends BaseEntity{
     private LocalDate nextDosesDate;
     @ManyToOne
     private PetEntity pet;
-
 }
