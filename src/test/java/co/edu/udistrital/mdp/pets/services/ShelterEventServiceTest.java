@@ -25,7 +25,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(ShelterEventService.class)
-class ShelterEventServiceTest {
+public class ShelterEventServiceTest {
 
     @Autowired
     private ShelterEventService shelterEventService;
@@ -141,8 +141,8 @@ class ShelterEventServiceTest {
     //Test para eliminar evento inexistente.
     @Test
     void deleteNonExistingShelterEvent() {
-        assertThrows(EntityNotFoundException.class, () -> {
-            shelterEventService.deleteShelterEvent(999L);
-        });
+        assertThrows(EntityNotFoundException.class,
+            () -> shelterEventService.deleteShelterEvent(999L)
+        );
     }
 }
