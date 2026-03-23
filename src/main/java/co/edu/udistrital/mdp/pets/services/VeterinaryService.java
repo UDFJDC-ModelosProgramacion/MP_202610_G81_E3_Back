@@ -11,7 +11,9 @@ import co.edu.udistrital.mdp.pets.entities.VeterinaryEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.repositories.VeterinaryRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class VeterinaryService {
 
