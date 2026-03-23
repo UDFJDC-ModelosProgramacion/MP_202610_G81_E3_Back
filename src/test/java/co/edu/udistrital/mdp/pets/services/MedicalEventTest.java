@@ -23,7 +23,6 @@ import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 @DataJpaTest
 @Transactional
 @Import(MedicalEventService.class)
@@ -69,7 +68,6 @@ class MedicalEventServiceTest {
             medicalEventList.add(entity);
         }
     }
-
 
     /**
      * Prueba para crear un MedicalEvent con datos válidos.
@@ -180,8 +178,6 @@ class MedicalEventServiceTest {
             medicalEventService.updateMedicalEventEntity(0L, updatedData);
         });
     }
-
-
 
     /**
      * Prueba para eliminar un MedicalEvent existente.
