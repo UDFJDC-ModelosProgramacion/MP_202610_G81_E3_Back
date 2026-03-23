@@ -10,10 +10,10 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 @Data
 public class MedicalEventEntity extends BaseEntity{
-    public String description;
-    public LocalDate date;
+    private String description;
+    private LocalDate date;
 
     @PodamExclude
     @ManyToOne
-    public PetEntity pet;
+    private PetEntity pet;
 }

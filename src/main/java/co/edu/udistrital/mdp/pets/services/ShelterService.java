@@ -63,7 +63,7 @@ public class ShelterService {
         if(shelterRepository.findByEmail(shelterEntity.getEmail()).isPresent())
             throw new IllegalOperationException("There is already a shelter with that email.");
 
-        //Si cumple con todo se permitirá crear un refugio.
+        //Si cumple se permitirá crear un refugio.
         return shelterRepository.save(shelterEntity);
     }
 
