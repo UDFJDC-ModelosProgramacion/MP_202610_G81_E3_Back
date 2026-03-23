@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class ReturnEntity extends BaseEntity {
+public class ReturnPetEntity extends BaseEntity {
 
     private String reason;
     private LocalDate returnDate;
