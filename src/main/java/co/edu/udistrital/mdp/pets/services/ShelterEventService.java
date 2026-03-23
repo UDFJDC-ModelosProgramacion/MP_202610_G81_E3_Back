@@ -53,7 +53,7 @@ public class ShelterEventService {
         if(!events.isEmpty())
             throw new IllegalOperationException("There is already an event with that date.");
 
-        //Si todo es correcto guarda el evento
+        //Si es correcto guarda el evento
         return shelterEventRepository.save(shelterEventEntity);
     }
 

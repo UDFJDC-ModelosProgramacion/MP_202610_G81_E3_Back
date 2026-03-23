@@ -44,7 +44,7 @@ public class MessageService {
         //Uso del metodo privado.
         validateMessage(messageEntity);
 
-        //Si todo es correcto guarda el mensaje.
+        //Si es correcto guarda el mensaje.
         return messageRepository.save(messageEntity);
     }
 

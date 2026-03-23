@@ -19,6 +19,10 @@ public class ReturnPetService {
     @Autowired
     private ReturnPetRepository returnRepository;
 
+    private static final String MSG_RETURN_NOT_FOUND = "La devolución con id %d no fue encontrada.";
+    private static final String MSG_REASON_INVALID = "La razón de devolución no puede ser nula o vacía.";
+    private static final String MSG_DATE_INVALID = "La fecha de devolución no puede ser en el futuro.";
+
     /**
      * Crea una nueva devolución.
      * Reglas de negocio:
@@ -28,10 +32,10 @@ public class ReturnPetService {
     @Transactional
     public ReturnPetEntity createReturn(ReturnPetEntity returnEntity) throws IllegalOperationException {
         if (returnEntity.getReason() == null || returnEntity.getReason().trim().isEmpty()) {
-            throw new IllegalOperationException("La razón de devolución no puede ser nula o vacía.");
+            throw new IllegalOperationException(MSG_REASON_INVALID);
         }
         if (returnEntity.getReturnDate() != null && returnEntity.getReturnDate().isAfter(LocalDate.now())) {
-            throw new IllegalOperationException("La fecha de devolución no puede ser en el futuro.");
+            throw new IllegalOperationException(MSG_DATE_INVALID);
         }
         return returnRepository.save(returnEntity);
     }
@@ -51,7 +55,7 @@ public class ReturnPetService {
     public ReturnPetEntity getReturn(Long id) throws EntityNotFoundException {
         Optional<ReturnPetEntity> returnEntity = returnRepository.findById(id);
         if (returnEntity.isEmpty()) {
-            throw new EntityNotFoundException("La devolución con id " + id + " no fue encontrada.");
+            throw new EntityNotFoundException(String.format(MSG_RETURN_NOT_FOUND, id));
         }
         return returnEntity.get();
     }
@@ -67,13 +71,13 @@ public class ReturnPetService {
             throws EntityNotFoundException, IllegalOperationException {
         Optional<ReturnPetEntity> existing = returnRepository.findById(id);
         if (existing.isEmpty()) {
-            throw new EntityNotFoundException("La devolución con id " + id + " no fue encontrada.");
+            throw new EntityNotFoundException(String.format(MSG_RETURN_NOT_FOUND, id));
         }
         if (returnEntity.getReason() == null || returnEntity.getReason().trim().isEmpty()) {
-            throw new IllegalOperationException("La razón de devolución no puede ser nula o vacía.");
+            throw new IllegalOperationException(MSG_REASON_INVALID);
         }
         if (returnEntity.getReturnDate() != null && returnEntity.getReturnDate().isAfter(LocalDate.now())) {
-            throw new IllegalOperationException("La fecha de devolución no puede ser en el futuro.");
+            throw new IllegalOperationException(MSG_DATE_INVALID);
         }
         returnEntity.setId(id);
         return returnRepository.save(returnEntity);
@@ -86,7 +90,7 @@ public class ReturnPetService {
     public void deleteReturn(Long id) throws EntityNotFoundException {
         Optional<ReturnPetEntity> returnEntity = returnRepository.findById(id);
         if (returnEntity.isEmpty()) {
-            throw new EntityNotFoundException("La devolución con id " + id + " no fue encontrada.");
+            throw new EntityNotFoundException(String.format(MSG_RETURN_NOT_FOUND, id));
         }
         returnRepository.deleteById(id);
     }
