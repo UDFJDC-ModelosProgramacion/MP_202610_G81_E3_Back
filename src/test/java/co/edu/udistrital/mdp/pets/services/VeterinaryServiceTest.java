@@ -189,8 +189,6 @@ class VeterinaryServiceTest {
         });
     }
 
-    // Tests: deleteVeterinary
-
     @Test
     void testDeleteVeterinaryValid() throws EntityNotFoundException {
         VeterinaryEntity entity = veterinaryList.get(1);
