@@ -1,7 +1,6 @@
 package co.edu.udistrital.mdp.pets.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +23,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(PetService.class)
-public class PetServiceTest {
+class PetServiceTest {
 
     @Autowired
     private PetService petService;
@@ -54,7 +53,7 @@ public class PetServiceTest {
 
     //Prueba añadida (puede ser cambiada posteriormente).
     @Test
-    public void testCreatePet() throws EntityNotFoundException, IllegalOperationException {
+    void testCreatePet() throws EntityNotFoundException, IllegalOperationException {
         PetEntity newPet = factory.manufacturePojo(PetEntity.class);
         // Se prueba con datos específicos para asegurar que se guardan en la base de datos.
         newPet.setName("Bingo");
