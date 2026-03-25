@@ -20,7 +20,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 @DataJpaTest
 @Import(FollowUpService.class)
-public class FollowUpServiceTest {
+class FollowUpServiceTest {
 
     @Autowired
     private FollowUpService followUpService;
