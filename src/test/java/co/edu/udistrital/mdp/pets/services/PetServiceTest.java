@@ -1,6 +1,7 @@
 package co.edu.udistrital.mdp.pets.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
+import co.edu.udistrital.mdp.pets.entities.MediaFileEntity;
 import co.edu.udistrital.mdp.pets.entities.PetEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
@@ -50,9 +52,22 @@ public class PetServiceTest {
         }
     }
 
+    //Prueba añadida (puede ser cambiada posteriormente).
     @Test
     public void testCreatePet() throws EntityNotFoundException, IllegalOperationException {
         PetEntity newPet = factory.manufacturePojo(PetEntity.class);
+        // Se prueba con datos específicos para asegurar que se guardan en la base de datos.
+        newPet.setName("Bingo");
+        newPet.setSpecies("Perro");
+        newPet.setBreed("Labrador");
+        newPet.setSex("Macho");
+        newPet.setSize(50.0f);
+        newPet.setArriveToShelter(new java.sql.Date(System.currentTimeMillis()));
+        newPet.setSpecificRequirements("Ninguno");
+
+        newPet.setPhotographes(new ArrayList<>());
+        newPet.getPhotographes().add(new MediaFileEntity());
+
         PetEntity result = petService.createPet(newPet);
 
         assertNotNull(result);
@@ -62,27 +77,4 @@ public class PetServiceTest {
         assertEquals(newPet.getSpecies(), entity.getSpecies());
         assertEquals(newPet.getBreed(), entity.getBreed());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

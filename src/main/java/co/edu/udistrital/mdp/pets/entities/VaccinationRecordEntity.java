@@ -6,13 +6,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class VaccinationRecordEntity extends BaseEntity{
     private String vaccineName;
     private LocalDate vaccineDate;
     private LocalDate nextDosesDate;
     @ManyToOne
     private PetEntity pet;
-
 }

@@ -43,7 +43,6 @@ class FollowUpServiceTest {
         followUpEntity.setPet(null);
         followUpEntity = followUpService.createFollowUp(followUpEntity);
     }
-
     // Tests: createFollowUp
 
     @Test
