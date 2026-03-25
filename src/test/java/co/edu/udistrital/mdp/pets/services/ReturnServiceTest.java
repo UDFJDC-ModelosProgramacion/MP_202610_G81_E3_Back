@@ -11,47 +11,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-import co.edu.udistrital.mdp.pets.entities.ReturnEntity;
+import co.edu.udistrital.mdp.pets.entities.ReturnPetEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
-import co.edu.udistrital.mdp.pets.repositories.ReturnRepository;
+import co.edu.udistrital.mdp.pets.repositories.ReturnPetRepository;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 @DataJpaTest
-@Import(ReturnService.class)
+@Import(ReturnPetService.class)
 class ReturnServiceTest {
 
     @Autowired
-    private ReturnService returnService;
+    private ReturnPetService returnPetService;
 
     @Autowired
-    private ReturnRepository returnRepository;
+    private ReturnPetRepository returnPetRepository;
 
     private PodamFactory factory = new PodamFactoryImpl();
-    private ReturnEntity returnEntity;
+    private ReturnPetEntity returnPetEntity;
 
     @BeforeEach
     void setUp() throws IllegalOperationException {
-        returnRepository.deleteAll();
+        returnPetRepository.deleteAll();
 
         // Crear una devolución válida base para los tests
-        returnEntity = factory.manufacturePojo(ReturnEntity.class);
-        returnEntity.setId(null);
-        returnEntity.setReason("Incompatibilidad con otros animales");
-        returnEntity.setReturnDate(LocalDate.now().minusDays(1));
-        returnEntity = returnService.createReturn(returnEntity);
+        returnPetEntity = factory.manufacturePojo(ReturnPetEntity.class);
+        returnPetEntity.setId(null);
+        returnPetEntity.setReason("Incompatibilidad con otros animales");
+        returnPetEntity.setReturnDate(LocalDate.now().minusDays(1));
+        returnPetEntity = returnPetService.createReturn(returnPetEntity);
     }
 
     // Tests: createReturn
 
     @Test
     void testCreateReturnValid() throws IllegalOperationException {
-        ReturnEntity newReturn = new ReturnEntity();
+        ReturnPetEntity newReturn = new ReturnPetEntity();
         newReturn.setReason("Problemas de salud del adoptante");
         newReturn.setReturnDate(LocalDate.now());
 
-        ReturnEntity result = returnService.createReturn(newReturn);
+        ReturnPetEntity result = returnPetService.createReturn(newReturn);
 
         assertNotNull(result.getId());
         assertEquals("Problemas de salud del adoptante", result.getReason());
@@ -59,36 +59,36 @@ class ReturnServiceTest {
 
     @Test
     void testCreateReturnReasonNull() {
-        ReturnEntity newReturn = new ReturnEntity();
+        ReturnPetEntity newReturn = new ReturnPetEntity();
         newReturn.setReason(null);
         newReturn.setReturnDate(LocalDate.now());
 
-        assertThrows(IllegalOperationException.class, () -> returnService.createReturn(newReturn));
+        assertThrows(IllegalOperationException.class, () -> returnPetService.createReturn(newReturn));
     }
 
     @Test
     void testCreateReturnReasonEmpty() {
-        ReturnEntity newReturn = new ReturnEntity();
+        ReturnPetEntity newReturn = new ReturnPetEntity();
         newReturn.setReason("   ");
         newReturn.setReturnDate(LocalDate.now());
 
-        assertThrows(IllegalOperationException.class, () -> returnService.createReturn(newReturn));
+        assertThrows(IllegalOperationException.class, () -> returnPetService.createReturn(newReturn));
     }
 
     @Test
     void testCreateReturnDateInFuture() {
-        ReturnEntity newReturn = new ReturnEntity();
+        ReturnPetEntity newReturn = new ReturnPetEntity();
         newReturn.setReason("Razón válida");
         newReturn.setReturnDate(LocalDate.now().plusDays(5));
 
-        assertThrows(IllegalOperationException.class, () -> returnService.createReturn(newReturn));
+        assertThrows(IllegalOperationException.class, () -> returnPetService.createReturn(newReturn));
     }
 
     // Tests: getReturns
 
     @Test
     void testGetReturns() {
-        List<ReturnEntity> returns = returnService.getReturns();
+        List<ReturnPetEntity> returns = returnPetService.getReturns();
         assertFalse(returns.isEmpty());
     }
 
@@ -96,68 +96,68 @@ class ReturnServiceTest {
 
     @Test
     void testGetReturnValid() throws EntityNotFoundException {
-        ReturnEntity found = returnService.getReturn(returnEntity.getId());
+        ReturnPetEntity found = returnPetService.getReturn(returnPetEntity.getId());
         assertNotNull(found);
-        assertEquals(returnEntity.getId(), found.getId());
+        assertEquals(returnPetEntity.getId(), found.getId());
     }
 
     @Test
     void testGetReturnNotFound() {
-        assertThrows(EntityNotFoundException.class, () -> returnService.getReturn(0L));
+        assertThrows(EntityNotFoundException.class, () -> returnPetService.getReturn(0L));
     }
 
     // Tests: updateReturn
 
     @Test
     void testUpdateReturnValid() throws EntityNotFoundException, IllegalOperationException {
-        ReturnEntity updated = new ReturnEntity();
+        ReturnPetEntity updated = new ReturnPetEntity();
         updated.setReason("Nueva razón de devolución");
         updated.setReturnDate(LocalDate.now().minusDays(2));
 
-        ReturnEntity result = returnService.updateReturn(returnEntity.getId(), updated);
+        ReturnPetEntity result = returnPetService.updateReturn(returnPetEntity.getId(), updated);
 
         assertEquals("Nueva razón de devolución", result.getReason());
     }
 
     @Test
     void testUpdateReturnNotFound() {
-        ReturnEntity updated = new ReturnEntity();
+        ReturnPetEntity updated = new ReturnPetEntity();
         updated.setReason("Razón válida");
         updated.setReturnDate(LocalDate.now());
 
-        assertThrows(EntityNotFoundException.class, () -> returnService.updateReturn(0L, updated));
+        assertThrows(EntityNotFoundException.class, () -> returnPetService.updateReturn(0L, updated));
     }
 
     @Test
     void testUpdateReturnReasonNull() {
-        ReturnEntity updated = new ReturnEntity();
+        ReturnPetEntity updated = new ReturnPetEntity();
         updated.setReason(null);
         updated.setReturnDate(LocalDate.now());
 
         assertThrows(IllegalOperationException.class,
-                () -> returnService.updateReturn(returnEntity.getId(), updated));
+                () -> returnPetService.updateReturn(returnPetEntity.getId(), updated));
     }
 
     @Test
     void testUpdateReturnDateInFuture() {
-        ReturnEntity updated = new ReturnEntity();
+        ReturnPetEntity updated = new ReturnPetEntity();
         updated.setReason("Razón válida");
         updated.setReturnDate(LocalDate.now().plusDays(3));
 
         assertThrows(IllegalOperationException.class,
-                () -> returnService.updateReturn(returnEntity.getId(), updated));
+                () -> returnPetService.updateReturn(returnPetEntity.getId(), updated));
     }
 
     // Tests: deleteReturn
 
     @Test
     void testDeleteReturnValid() throws EntityNotFoundException {
-        returnService.deleteReturn(returnEntity.getId());
-        assertThrows(EntityNotFoundException.class, () -> returnService.getReturn(returnEntity.getId()));
+        returnPetService.deleteReturn(returnPetEntity.getId());
+        assertThrows(EntityNotFoundException.class, () -> returnPetService.getReturn(returnPetEntity.getId()));
     }
 
     @Test
     void testDeleteReturnNotFound() {
-        assertThrows(EntityNotFoundException.class, () -> returnService.deleteReturn(0L));
+        assertThrows(EntityNotFoundException.class, () -> returnPetService.deleteReturn(0L));
     }
 }
