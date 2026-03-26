@@ -1,6 +1,6 @@
 package co.edu.udistrital.mdp.pets.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class PetEntity extends BaseEntity {
     private String sex;
     private Float size;
     private String temperament;
-    private Date arriveToShelter;
+    private LocalDate arriveToShelter;
     private String specificRequirements;
 
     @PodamExclude

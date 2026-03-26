@@ -84,7 +84,7 @@ public class PetService {
     }
 
     @Transactional
-    public void delatePet(Long petId) throws EntityNotFoundException, IllegalOperationException {
+    public void deletePet(Long petId) throws EntityNotFoundException, IllegalOperationException {
         log.info("inicia proceso de borrar mascota");
         Optional<PetEntity> petEntity = petRepository.findById(petId);
         if (petEntity.isEmpty()) {

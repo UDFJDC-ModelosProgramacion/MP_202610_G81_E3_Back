@@ -147,7 +147,7 @@ class MedicalEventServiceTest {
     @Test
     void testDeleteMedicalEvent() throws Exception {
         MedicalEventEntity entity = medicalEventList.get(0);
-        medicalEventService.delateMedicalEvent(entity.getId());
+        medicalEventService.deleteMedicalEvent(entity.getId());
 
         MedicalEventEntity deleted = entityManager.find(MedicalEventEntity.class, entity.getId());
         assertNull(deleted);
@@ -156,7 +156,7 @@ class MedicalEventServiceTest {
 @Test
     void testDeleteInvalidMedicalEvent() {
         assertThrows(EntityNotFoundException.class, () -> {
-            medicalEventService.delateMedicalEvent(0L);
+            medicalEventService.deleteMedicalEvent(0L);
         });
     } 
 }
