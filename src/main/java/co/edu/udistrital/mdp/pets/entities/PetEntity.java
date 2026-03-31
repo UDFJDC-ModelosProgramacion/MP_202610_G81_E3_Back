@@ -35,4 +35,10 @@ public class PetEntity extends BaseEntity {
     @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<MediaFileEntity> photographes=new ArrayList<>();
+
+    // se agrega la relacion de agregacion debil que se ve en el diagrama.
+    //es la relacionde petentity a adoptionentity
+    @OneToMany(mappedBy = "pet")
+    private List<AdoptionEntity> adoptions;
+
 }
