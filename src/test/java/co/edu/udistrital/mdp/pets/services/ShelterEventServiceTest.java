@@ -25,7 +25,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(ShelterEventService.class)
-public class ShelterEventServiceTest {
+class ShelterEventServiceTest {
 
     @Autowired
     private ShelterEventService shelterEventService;
