@@ -1,13 +1,13 @@
 package co.edu.udistrital.mdp.pets.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.transaction.Transactional;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import co.edu.udistrital.mdp.pets.MainApplication;
 import co.edu.udistrital.mdp.pets.entities.MedicalEventEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
+import jakarta.transaction.Transactional;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
@@ -27,7 +28,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @Transactional
 @Import(MedicalEventService.class)
 @ContextConfiguration(classes = MainApplication.class)
-class MedicalEventServiceTest {
+class MedicalEventTest {
 
     @Autowired
     private MedicalEventService medicalEventService;

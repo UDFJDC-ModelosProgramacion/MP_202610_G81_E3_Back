@@ -62,7 +62,7 @@ class PetServiceTest {
         newPet.setBreed("Labrador");
         newPet.setSex("Macho");
         newPet.setSize(50.0f);
-        newPet.setArriveToShelter(LocalDate.now());
+        newPet.setArriveToShelterDate(LocalDate.now());
         newPet.setSpecificRequirements("Ninguno");
 
         newPet.setPhotographes(new ArrayList<>());
