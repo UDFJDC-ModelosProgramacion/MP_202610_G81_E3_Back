@@ -11,7 +11,6 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 @Data
 @Entity
-
 public class PetEntity extends BaseEntity {
 
     private String name;
@@ -41,4 +40,10 @@ public class PetEntity extends BaseEntity {
     @PodamExclude
     @OneToMany(mappedBy="pet")
     private List<BackgroundEntity> backgrounds=new ArrayList<>();
+    // se agrega la relacion de agregacion debil que se ve en el diagrama.
+    //es la relacionde petentity a adoptionentity
+    @PodamExclude
+    @OneToMany(mappedBy = "pet")
+    private List<AdoptionEntity> adoptions;
+
 }

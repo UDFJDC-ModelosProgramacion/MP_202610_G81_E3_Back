@@ -25,7 +25,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @DataJpaTest
 @Transactional
 @Import(MessageService.class)
-public class MessageTest {
+class MessageTest {
 
     @Autowired
     private MessageService messageService;

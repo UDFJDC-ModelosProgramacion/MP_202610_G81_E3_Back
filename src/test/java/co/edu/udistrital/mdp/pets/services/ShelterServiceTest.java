@@ -27,7 +27,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @Transactional
 @Import(ShelterService.class)
 @ContextConfiguration(classes = MainApplication.class)
-public class ShelterServiceTest {
+class ShelterServiceTest {
 
 	@Autowired
 	private ShelterService shelterService;
