@@ -21,8 +21,10 @@ public class PetEntity extends BaseEntity {
     private String sex;
     private Float size;
     private String temperament;
-    private LocalDate arriveToShelter;
+    private LocalDate arriveToShelterDate;
     private String specificRequirements;
+    private PetState petState;
+    private ArriveToShelter arriveToShelter;
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
@@ -35,4 +37,8 @@ public class PetEntity extends BaseEntity {
     @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<MediaFileEntity> photographes=new ArrayList<>();
+
+    @PodamExclude
+    @OneToMany(mappedBy="pet")
+    private List<BackgroundEntity> backgrounds=new ArrayList<>();
 }
