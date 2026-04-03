@@ -9,14 +9,11 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 @Data
 @Entity
-
-public class NotificationEntity extends BaseEntity {
-    
-    private String message;
+public class BackgroundEntity extends BaseEntity{
     private LocalDate date;
+    private String description;
 
     @PodamExclude
     @ManyToOne
-    private ClientEntity client;
-
+    private PetEntity pet;
 }
