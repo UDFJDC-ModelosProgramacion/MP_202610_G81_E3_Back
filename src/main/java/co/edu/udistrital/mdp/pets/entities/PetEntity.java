@@ -46,4 +46,6 @@ public class PetEntity extends BaseEntity {
     @OneToMany(mappedBy = "pet")
     private List<AdoptionEntity> adoptions;
 
+    private FollowUpEntity followUpEntity;
+
 }

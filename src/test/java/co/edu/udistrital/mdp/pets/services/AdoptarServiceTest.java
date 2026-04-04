@@ -55,11 +55,13 @@ class AdoptarServiceTest {
 
             AdopterEntity adopter = new AdopterEntity();
             entityManager.persist(adopter);
+            entityManager.flush();  // Agrega esto para asignar el ID
             adopters.add(adopter);
 
             PetEntity pet = new PetEntity();
             // QUITADO: pet.setStatus("AVAILABLE");
             entityManager.persist(pet);
+            entityManager.flush();  // Agrega esto para asignar el ID
             pets.add(pet);
         }
     }

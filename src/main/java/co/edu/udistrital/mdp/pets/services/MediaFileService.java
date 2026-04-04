@@ -20,7 +20,7 @@ public class MediaFileService {
     private MediaFileRepository mediaFileRepository;
 
     @Transactional
-    public MediaFileEntity craeteMediaFile(MediaFileEntity mediaFileEntity) throws EntityNotFoundException, IllegalOperationException {
+    public MediaFileEntity createMediaFile(MediaFileEntity mediaFileEntity) throws EntityNotFoundException, IllegalOperationException {
         log.info("Inicia proceso de creacion de archivo");
 
         //revisa que el archivo tenga todos los datos llenos
