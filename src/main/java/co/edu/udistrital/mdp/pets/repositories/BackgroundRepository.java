@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.udistrital.mdp.pets.entities.BackgroundEntity;
 
+
 @Repository
 public interface BackgroundRepository extends JpaRepository<BackgroundEntity,Long>{
-
+    public BackgroundEntity findByPetIdAndId(Long petId, Long id);
 }

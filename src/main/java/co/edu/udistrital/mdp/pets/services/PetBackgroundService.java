@@ -36,6 +36,7 @@ public class PetBackgroundService {
             throw new EntityNotFoundException("No se encuentra mascota");
         }
         petEntity.get().getBackgrounds().add(backgroundEntity.get()); // se agrega el antecedente a la mascota
+        backgroundEntity.get().setPet(petEntity.get());
         log.info("Termina proceso de asociacion de antecedente y mascota");
         return petEntity.get();
     }
