@@ -37,12 +37,13 @@ public class PetMediaFileService {
             throw new EntityNotFoundException("No se encuentra mascota");
         }
         petEntity.get().getPhotographs().add(mediaFileEntity.get()); // se agrega la fotografia a la mascota
+        mediaFileEntity.get().setPet(petEntity.get());
         log.info("Termina proceso de asociacion de foto y mascota");
         return petEntity.get();
     }
 
     @Transactional
-    public List<MediaFileEntity> getPhotographes(Long petId)throws EntityNotFoundException{
+    public List<MediaFileEntity> getPhotographs(Long petId)throws EntityNotFoundException{
         log.info("Iniciando proceso de consulta de fotos");
         Optional<PetEntity>petEntity=petRepository.findById(petId);
         if(petEntity.isEmpty()){
