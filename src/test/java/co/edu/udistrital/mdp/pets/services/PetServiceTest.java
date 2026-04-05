@@ -65,8 +65,8 @@ class PetServiceTest {
         newPet.setArriveToShelterDate(LocalDate.now());
         newPet.setSpecificRequirements("Ninguno");
 
-        newPet.setPhotographes(new ArrayList<>());
-        newPet.getPhotographes().add(new MediaFileEntity());
+        newPet.setPhotographs(new ArrayList<>());
+        newPet.getPhotographs().add(new MediaFileEntity());
 
         PetEntity result = petService.createPet(newPet);
 

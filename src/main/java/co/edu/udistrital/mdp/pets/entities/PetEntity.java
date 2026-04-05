@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -22,8 +25,6 @@ public class PetEntity extends BaseEntity {
     private String temperament;
     private LocalDate arriveToShelterDate;
     private String specificRequirements;
-    private PetState petState;
-    private ArriveToShelter arriveToShelter;
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
@@ -35,7 +36,7 @@ public class PetEntity extends BaseEntity {
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MediaFileEntity> photographes=new ArrayList<>();
+    private List<MediaFileEntity> photographs = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy="pet")
@@ -46,4 +47,20 @@ public class PetEntity extends BaseEntity {
     @OneToMany(mappedBy = "pet")
     private List<AdoptionEntity> adoptions;
 
+    //Se agrega la relacion de follow up.
+    @PodamExclude
+    @OneToMany(mappedBy = "pet")
+    private List<FollowUpEntity> followUps = new ArrayList<>();
+
+    //Se agrega la relacion de Shelter.
+    @PodamExclude    
+    @ManyToOne
+    private ShelterEntity shelter;
+
+    //Enum implementado.
+    @Enumerated(EnumType.STRING)
+    private PetState petState;
+
+    @Enumerated(EnumType.STRING)
+    private ArriveToShelter arriveToShelter;
 }
