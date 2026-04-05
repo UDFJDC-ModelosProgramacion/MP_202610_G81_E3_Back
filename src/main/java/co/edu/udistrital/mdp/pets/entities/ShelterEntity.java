@@ -31,4 +31,13 @@ public class ShelterEntity extends BaseEntity {
     @OneToMany(mappedBy = "shelter")
     private List<MessageEntity> messages=new ArrayList<>();
 
+    //Agregacion de la relacion entre veterinarios y shelter.
+    @PodamExclude
+    @OneToMany(mappedBy = "shelter")
+    private List<VeterinaryEntity> veterinarians = new ArrayList<>();
+
+    //Agregacion de pet.
+    @PodamExclude
+    @OneToMany(mappedBy = "shelter")
+    private List<PetEntity> pets = new ArrayList<>();
 }
