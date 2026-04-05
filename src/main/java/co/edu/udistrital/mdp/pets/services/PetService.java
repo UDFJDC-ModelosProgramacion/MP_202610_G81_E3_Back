@@ -26,7 +26,7 @@ public class PetService {
         //revisa que la mascota tenga todos los datos llenos
         if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) && isStringValid(petEntity.getBreed())
                 && isStringValid(petEntity.getSex()) && petEntity.getSize() != null && petEntity.getArriveToShelterDate() != null
-                && isStringValid(petEntity.getSpecificRequirements()) && !petEntity.getPhotographes().isEmpty()) {
+                && isStringValid(petEntity.getSpecificRequirements()) && !petEntity.getPhotographs().isEmpty()) {
 
             return petRepository.save(petEntity);
 

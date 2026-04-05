@@ -36,7 +36,7 @@ public class PetMediaFileService {
         if(petEntity.isEmpty()){
             throw new EntityNotFoundException("No se encuentra mascota");
         }
-        petEntity.get().getPhotographes().add(mediaFileEntity.get()); // se agrega la fotografia a la mascota
+        petEntity.get().getPhotographs().add(mediaFileEntity.get()); // se agrega la fotografia a la mascota
         log.info("Termina proceso de asociacion de foto y mascota");
         return petEntity.get();
     }
@@ -49,7 +49,7 @@ public class PetMediaFileService {
             throw new EntityNotFoundException("No se encuentra mascota");
         }
         log.info("Finaliza proceso de consulta");
-        return petEntity.get().getPhotographes();
+        return petEntity.get().getPhotographs();
     }
     
 }
