@@ -2,6 +2,8 @@ package co.edu.udistrital.mdp.pets.dto;
 
 import java.time.LocalDate;
 
+import co.edu.udistrital.mdp.pets.entities.ArriveToShelter;
+import co.edu.udistrital.mdp.pets.entities.PetState;
 import lombok.Data;
 
 @Data
@@ -13,6 +15,11 @@ public class PetDTO {
     private String sex;
     private Float size;
     private String temperament;
-    private LocalDate arriveToShelter;
+    private LocalDate arriveToShelterDate;
     private String specificRequirements;
+    private PetState petState;
+    private ArriveToShelter arriveToShelter;
+
+    //falta folloupDTO
+    //falta un shelter
 }

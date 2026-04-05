@@ -36,6 +36,7 @@ public class PetMedicalEventService {
             throw new EntityNotFoundException("No se encuentra mascota");
         }
         petEntity.get().getMedicalEvents().add(medicalEventEntity.get()); // se agrega el evento medico a la mascota
+        medicalEventEntity.get().setPet(petEntity.get());
         log.info("Termina proceso de asociacion de evento medico y mascota");
         return petEntity.get();
     }
