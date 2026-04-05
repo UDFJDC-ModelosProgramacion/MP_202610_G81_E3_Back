@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import lombok.Data;
 
 @Data
-public class MedicalEventDTO {
-    private String description;
+public class BackgroundDTO {
     private LocalDate date;
+    private String description;
     private PetDTO pet;
 }

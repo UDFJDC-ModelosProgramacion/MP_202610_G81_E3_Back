@@ -5,9 +5,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.udistrital.mdp.pets.entities.PetEntity;
 import co.edu.udistrital.mdp.pets.entities.VaccinationRecordEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
+import co.edu.udistrital.mdp.pets.repositories.PetRepository;
 import co.edu.udistrital.mdp.pets.repositories.VaccinationRecordRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,9 @@ public class VaccinationRecordService {
     @Autowired
     private VaccinationRecordRepository vaccinationRecordRepository;
 
+    @Autowired
+    private PetRepository petRepository;
+    
     @Transactional
     public VaccinationRecordEntity createVaccinationRecord(VaccinationRecordEntity vaccinationRecordEntity) throws IllegalOperationException {
         log.info("Inicia proceso de creacion de registro de vacunacion ");
@@ -68,6 +73,23 @@ public class VaccinationRecordService {
         vaccinationRecordRepository.deleteById(id);
         log.info("Proceso de borrado terminado");
     }
+
+    @Transactional
+	public VaccinationRecordEntity getVaccinationRecord(Long petId, Long vaccinationRecordId) throws EntityNotFoundException {
+		log.info("Inicia proceso de consultar el registro de vacunacion con id = {0} de la mascota con id = " + petId,
+				vaccinationRecordId);
+		Optional<PetEntity> petEntity = petRepository.findById(petId);
+		if (petEntity.isEmpty())
+			throw new EntityNotFoundException("mascota no encontrada");
+
+		Optional<VaccinationRecordEntity> vaccinationRecordEntity = vaccinationRecordRepository.findById(vaccinationRecordId);
+		if (vaccinationRecordEntity.isEmpty())
+			throw new EntityNotFoundException("registro de vacuna no encontrado");
+
+		log.info("Termina proceso de consultar el registro de vacunacion con id = {0} de la mascota con id = " + petId,
+				vaccinationRecordId);
+		return vaccinationRecordRepository.findByPetIdAndId(petId, vaccinationRecordId);
+	}
 
     private boolean isStringValid(String texto) {
         return !(texto == null || texto.isEmpty());

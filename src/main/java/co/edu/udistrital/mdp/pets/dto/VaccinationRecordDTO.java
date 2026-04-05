@@ -9,4 +9,5 @@ public class VaccinationRecordDTO {
     private String vaccineName;
     private LocalDate vaccineDate;
     private LocalDate nextDosesDate;
+    private PetDTO pet;
 }
