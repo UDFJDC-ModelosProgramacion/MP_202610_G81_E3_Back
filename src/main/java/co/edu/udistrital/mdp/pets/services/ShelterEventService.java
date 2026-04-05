@@ -115,4 +115,16 @@ public class ShelterEventService {
 
         log.info("End delete shelter event process with id: {}", shelterEventId);
     }
+
+    public List<ShelterEventEntity> getEvents() {
+        log.info("Fetching all shelter events");
+        return shelterEventRepository.findAll();
+    }
+
+    public ShelterEventEntity getEvent(Long id) throws EntityNotFoundException {
+        log.info("Fetching shelter event with id: {}", id);
+
+        return shelterEventRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Shelter event not found"));
+    }
 }
