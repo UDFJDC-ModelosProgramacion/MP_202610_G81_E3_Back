@@ -23,4 +23,10 @@ public class ClientEntity extends BaseEntity {
 
   //  @OneToOne(mappedBy = "client")
     //private AdopterEntity adopter;
+
+  //Se añade relacion entre mensaje, cliente y shelter.
+  @PodamExclude
+  @OneToMany(mappedBy = "client")
+  private List<MessageEntity> messages = new ArrayList<>();
+
 }

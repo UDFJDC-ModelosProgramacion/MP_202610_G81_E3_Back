@@ -14,8 +14,13 @@ public class MessageEntity extends BaseEntity{
     String author;
     String messageContent;
     LocalDate date;
-
+    //Relacion con shelter.
     @PodamExclude
     @ManyToOne
     private ShelterEntity shelter;
+
+    //Relacion con cliente.
+    @PodamExclude
+    @ManyToOne
+    private ClientEntity client;
 }
