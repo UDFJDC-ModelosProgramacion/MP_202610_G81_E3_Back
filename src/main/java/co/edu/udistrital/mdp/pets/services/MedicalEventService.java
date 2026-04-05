@@ -51,7 +51,7 @@ public class MedicalEventService {
     }
 
     @Transactional
-    public void delateMedicalEvent(Long id) throws EntityNotFoundException{
+    public void deleteMedicalEvent(Long id) throws EntityNotFoundException{
         log.info("Inicia proceso de eliminacion de evento medico");
         Optional<MedicalEventEntity> medicalEventOptional = medicalEventRepository.findById(id);
         if (medicalEventOptional.isEmpty()) {

@@ -1,12 +1,13 @@
 package co.edu.udistrital.mdp.pets.entities;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
 import uk.co.jemos.podam.common.PodamExclude;
 
 
@@ -18,9 +19,11 @@ public class AdoptionEntity extends BaseEntity {
     private LocalDate adoptionDate;
     private String status;
     
+    @PodamExclude
     @ManyToOne
     private AdopterEntity adopter;
 
+    @PodamExclude
     @ManyToOne
     private PetEntity pet;
 

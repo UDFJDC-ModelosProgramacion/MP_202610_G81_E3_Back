@@ -58,7 +58,7 @@ public class VaccinationRecordService {
     }
 
     @Transactional
-    public void delateVaccinationRecord(Long id) throws EntityNotFoundException {
+    public void deleteVaccinationRecord(Long id) throws EntityNotFoundException {
         log.info("inicia proceso de borrar registro de vacunacion");
         Optional<VaccinationRecordEntity> vaccOptional = vaccinationRecordRepository.findById(id);
         if (vaccOptional.isEmpty()) {

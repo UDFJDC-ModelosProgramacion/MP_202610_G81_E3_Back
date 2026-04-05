@@ -1,6 +1,6 @@
 package co.edu.udistrital.mdp.pets.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,6 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 @Data
 @Entity
-
 public class PetEntity extends BaseEntity {
 
     private String name;
@@ -21,8 +20,10 @@ public class PetEntity extends BaseEntity {
     private String sex;
     private Float size;
     private String temperament;
-    private Date arriveToShelter;
+    private LocalDate arriveToShelterDate;
     private String specificRequirements;
+    private PetState petState;
+    private ArriveToShelter arriveToShelter;
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
@@ -36,8 +37,12 @@ public class PetEntity extends BaseEntity {
     @OneToMany(mappedBy = "pet")
     private List<MediaFileEntity> photographes=new ArrayList<>();
 
+    @PodamExclude
+    @OneToMany(mappedBy="pet")
+    private List<BackgroundEntity> backgrounds=new ArrayList<>();
     // se agrega la relacion de agregacion debil que se ve en el diagrama.
     //es la relacionde petentity a adoptionentity
+    @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<AdoptionEntity> adoptions;
 
