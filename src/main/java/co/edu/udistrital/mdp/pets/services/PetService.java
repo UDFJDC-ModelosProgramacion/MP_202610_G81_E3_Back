@@ -1,5 +1,6 @@
 package co.edu.udistrital.mdp.pets.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,15 @@ public class PetService {
 
         //revisa que la mascota tenga todos los datos llenos
         if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) && isStringValid(petEntity.getBreed())
-                && isStringValid(petEntity.getSex()) && petEntity.getSize() != null && petEntity.getArriveToShelter() != null
-                && isStringValid(petEntity.getSpecificRequirements()) && !petEntity.getPhotographes().isEmpty()) {
+                && isStringValid(petEntity.getSex()) && petEntity.getSize() != null && petEntity.getArriveToShelterDate() != null
+                && isStringValid(petEntity.getSpecificRequirements()) ) {
 
             return petRepository.save(petEntity);
 
         } else {
             throw new IllegalOperationException("todos los campos tienen que estar llenos");
         }
-
+//&& !petEntity.getPhotographes().isEmpty()
     }
 
     @Transactional
@@ -71,8 +72,8 @@ public class PetService {
         if (petEntity.getTemperament() != null) {
             existingPet.setTemperament(petEntity.getTemperament());
         }
-        if (petEntity.getArriveToShelter() != null) {
-            existingPet.setArriveToShelter(petEntity.getArriveToShelter());
+        if (petEntity.getArriveToShelterDate() != null) {
+            existingPet.setArriveToShelterDate(petEntity.getArriveToShelterDate());
         }
 
         if (petEntity.getSpecificRequirements() != null) {
@@ -84,7 +85,7 @@ public class PetService {
     }
 
     @Transactional
-    public void delatePet(Long petId) throws EntityNotFoundException, IllegalOperationException {
+    public void deletePet(Long petId) throws EntityNotFoundException, IllegalOperationException {
         log.info("inicia proceso de borrar mascota");
         Optional<PetEntity> petEntity = petRepository.findById(petId);
         if (petEntity.isEmpty()) {
@@ -94,6 +95,22 @@ public class PetService {
         petRepository.deleteById(petId);
         log.info("Proceso de borrado terminado");
     }
+
+    @Transactional
+    public List<PetEntity> getPets() {
+		log.info("Inicia proceso de consultar todas las macotas");
+		return petRepository.findAll();
+	}
+
+    @Transactional
+	public PetEntity getPet(Long petId) throws EntityNotFoundException {
+		log.info("Inicia proceso de consula de la mascota", petId);
+		Optional<PetEntity> petEntity = petRepository.findById(petId);
+		if (petEntity.isEmpty())
+			throw new EntityNotFoundException("mascota no encontrada");
+		log.info("Termina proceso de consultar la mascota con id = {0}", petId);
+		return petEntity.get();
+	}
 
     private boolean isStringValid(String texto) {
         return !(texto == null || texto.isEmpty());

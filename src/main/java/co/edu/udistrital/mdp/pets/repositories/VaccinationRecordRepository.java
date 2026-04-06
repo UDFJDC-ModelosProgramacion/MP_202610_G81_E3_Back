@@ -10,5 +10,6 @@ import co.edu.udistrital.mdp.pets.entities.VaccinationRecordEntity;
 @Repository
 public interface VaccinationRecordRepository extends JpaRepository<VaccinationRecordEntity,Long>{
     public List<VaccinationRecordEntity> findByVaccineName(String vacineName);
+    public VaccinationRecordEntity findByPetIdAndId(Long petId, Long id);
 
 }

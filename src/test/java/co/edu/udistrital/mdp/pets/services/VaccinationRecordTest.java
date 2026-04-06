@@ -213,7 +213,7 @@ class VaccinationRecordTest {
     @Test
     void testDeleteVaccinationRecord() throws Exception {
         VaccinationRecordEntity entity = vaccinationRecordList.get(0);
-        vaccinationRecordService.delateVaccinationRecord(entity.getId());
+        vaccinationRecordService.deleteVaccinationRecord(entity.getId());
 
         VaccinationRecordEntity deleted = entityManager.find(VaccinationRecordEntity.class, entity.getId());
         assertNull(deleted);
@@ -226,7 +226,7 @@ class VaccinationRecordTest {
     @Test
     void testDeleteInvalidVaccinationRecord() {
         assertThrows(EntityNotFoundException.class, () -> {
-            vaccinationRecordService.delateVaccinationRecord(0L);
+            vaccinationRecordService.deleteVaccinationRecord(0L);
         });
     }
 }

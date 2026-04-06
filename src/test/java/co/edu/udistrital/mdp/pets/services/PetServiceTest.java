@@ -1,5 +1,6 @@
 package co.edu.udistrital.mdp.pets.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +62,11 @@ class PetServiceTest {
         newPet.setBreed("Labrador");
         newPet.setSex("Macho");
         newPet.setSize(50.0f);
-        newPet.setArriveToShelter(new java.sql.Date(System.currentTimeMillis()));
+        newPet.setArriveToShelterDate(LocalDate.now());
         newPet.setSpecificRequirements("Ninguno");
 
-        newPet.setPhotographes(new ArrayList<>());
-        newPet.getPhotographes().add(new MediaFileEntity());
+        newPet.setPhotographs(new ArrayList<>());
+        newPet.getPhotographs().add(new MediaFileEntity());
 
         PetEntity result = petService.createPet(newPet);
 
