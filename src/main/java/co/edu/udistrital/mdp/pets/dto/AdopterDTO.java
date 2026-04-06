@@ -1,27 +1,27 @@
-package co.edu.udistrital.mdp.pets.entities;
+package co.edu.udistrital.mdp.pets.dto;
 
 // ===== IMPORTS INICIO =====
-import jakarta.persistence.Entity;
 import lombok.Data;
 // ===== IMPORTS FIN =====
 
 
 // ===== DEFINICIÓN DE CLASE INICIO =====
 @Data
-@Entity
-public class ClientEntity extends BaseEntity {
+public class AdopterDTO {
 // ===== DEFINICIÓN DE CLASE FIN =====
 
 
     // ===== ATRIBUTOS INICIO =====
+
+    // ----- Datos de Client -----
     private String clientName;
     private String clientPhone;
     private String clientEmail;
+
+    // ----- Datos propios -----
+    private Boolean hasChildren;
+    private Boolean hasPets;
+
     // ===== ATRIBUTOS FIN =====
-
-
-    // ===== RELACIONES INICIO =====
-    // (Sin relaciones - modelo simplificado)
-    // ===== RELACIONES FIN =====
 
 }

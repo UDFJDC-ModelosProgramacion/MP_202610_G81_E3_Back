@@ -10,6 +10,8 @@ import co.edu.udistrital.mdp.pets.repositories.ShelterRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -123,9 +125,19 @@ public class ShelterService {
         if(!shelterEntity.get().getEvents().isEmpty())
             throw new IllegalOperationException("Cannot delete shelter because it has upcoming events.");
 
-        //Queda pendiente validar mascotas.
-
         shelterRepository.deleteById(shelterId);
         log.info("End delete shelter process with id: {}", shelterId);
+    }
+
+    public List<ShelterEntity> getShelters() {
+        log.info("Fetching all shelters");
+        return shelterRepository.findAll();
+    }
+
+    public ShelterEntity getShelter(Long id) throws EntityNotFoundException {
+        log.info("Fetching shelter with id: {}", id);
+
+        return shelterRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Shelter not found"));
     }
 }
