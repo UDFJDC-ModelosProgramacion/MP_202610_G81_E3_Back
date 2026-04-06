@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.udistrital.mdp.pets.entities.ClientEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.pets.repositories.ClientRepository;
 
 @SpringBootTest
 @Transactional
@@ -19,92 +21,77 @@ public class ClientServiceTest {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
+    private ClientEntity client1;
+    private ClientEntity client2;
+
+    @BeforeEach
+    void setUp() {
+        clientRepository.deleteAll();
+
+        client1 = new ClientEntity();
+        client1.setClientName("Juan Perez");
+        client1.setClientEmail("juan@test.com");
+        client1.setClientPhone("3001234567");
+        clientService.createClient(client1);
+
+        client2 = new ClientEntity();
+        client2.setClientName("Maria Lopez");
+        client2.setClientEmail("maria@test.com");
+        client2.setClientPhone("3109876543");
+        clientService.createClient(client2);
+    }
+
     @Test
     void testCreateClient() {
-
         ClientEntity client = new ClientEntity();
-        client.setClientName("Juan Perez");
-        client.setClientEmail("juan@test.com");
-        client.setClientPhone("3001234567");
+        client.setClientName("Pedro Ruiz");
+        client.setClientEmail("pedro@test.com");
+        client.setClientPhone("3201112233");
 
         ClientEntity saved = clientService.createClient(client);
 
         assertNotNull(saved);
         assertNotNull(saved.getId());
-        assertEquals("Juan Perez", saved.getClientName());
+        assertEquals("Pedro Ruiz", saved.getClientName());
     }
 
     @Test
     void testGetClient() throws EntityNotFoundException {
+        ClientEntity found = clientService.getClient(client1.getId());
 
-        ClientEntity client = new ClientEntity();
-        client.setClientName("Maria Lopez");
-        client.setClientEmail("maria@test.com");
-        client.setClientPhone("3109876543");
-
-        ClientEntity saved = clientService.createClient(client);
-
-        ClientEntity found = clientService.getClient(saved.getId());
-
-        assertEquals(saved.getId(), found.getId());
-        assertEquals("Maria Lopez", found.getClientName());
+        assertEquals(client1.getId(), found.getId());
+        assertEquals(client1.getClientName(), found.getClientName());
+        assertEquals(client1.getClientEmail(), found.getClientEmail());
     }
 
     @Test
     void testGetClients() {
-
-        ClientEntity c1 = new ClientEntity();
-        c1.setClientName("A");
-        c1.setClientEmail("a@test.com");
-        c1.setClientPhone("111");
-        clientService.createClient(c1);
-
-        ClientEntity c2 = new ClientEntity();
-        c2.setClientName("B");
-        c2.setClientEmail("b@test.com");
-        c2.setClientPhone("222");
-        clientService.createClient(c2);
-
         List<ClientEntity> list = clientService.getClients();
-
         assertTrue(list.size() >= 2);
     }
 
     @Test
     void testUpdateClient() throws EntityNotFoundException {
-
-        ClientEntity client = new ClientEntity();
-        client.setClientName("Old Name");
-        client.setClientEmail("old@test.com");
-        client.setClientPhone("000");
-
-        ClientEntity saved = clientService.createClient(client);
-
         ClientEntity update = new ClientEntity();
-        update.setClientName("New Name");
-        update.setClientEmail("new@test.com");
-        update.setClientPhone("999");
+        update.setClientName("Juan Actualizado");
+        update.setClientEmail("juanupdate@test.com");
+        update.setClientPhone("3110001111");
 
-        ClientEntity updated = clientService.updateClient(saved.getId(), update);
+        ClientEntity updated = clientService.updateClient(client1.getId(), update);
 
-        assertEquals("New Name", updated.getClientName());
-        assertEquals("999", updated.getClientPhone());
+        assertEquals("Juan Actualizado", updated.getClientName());
+        assertEquals("3110001111", updated.getClientPhone());
     }
 
     @Test
     void testDeleteClient() throws EntityNotFoundException {
-
-        ClientEntity client = new ClientEntity();
-        client.setClientName("Delete Me");
-        client.setClientEmail("delete@test.com");
-        client.setClientPhone("123");
-
-        ClientEntity saved = clientService.createClient(client);
-
-        clientService.deleteClient(saved.getId());
+        clientService.deleteClient(client2.getId());
 
         assertThrows(EntityNotFoundException.class, () -> {
-            clientService.getClient(saved.getId());
+            clientService.getClient(client2.getId());
         });
     }
 }

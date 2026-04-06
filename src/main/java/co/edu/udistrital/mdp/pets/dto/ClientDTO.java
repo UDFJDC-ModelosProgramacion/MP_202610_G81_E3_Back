@@ -1,15 +1,13 @@
-package co.edu.udistrital.mdp.pets.entities;
+package co.edu.udistrital.mdp.pets.dto;
 
 // ===== IMPORTS INICIO =====
-import jakarta.persistence.Entity;
 import lombok.Data;
 // ===== IMPORTS FIN =====
 
 
 // ===== DEFINICIÓN DE CLASE INICIO =====
 @Data
-@Entity
-public class ClientEntity extends BaseEntity {
+public class ClientDTO {
 // ===== DEFINICIÓN DE CLASE FIN =====
 
 
@@ -18,10 +16,5 @@ public class ClientEntity extends BaseEntity {
     private String clientPhone;
     private String clientEmail;
     // ===== ATRIBUTOS FIN =====
-
-
-    // ===== RELACIONES INICIO =====
-    // (Sin relaciones - modelo simplificado)
-    // ===== RELACIONES FIN =====
 
 }

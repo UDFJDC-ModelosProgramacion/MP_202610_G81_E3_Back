@@ -1,7 +1,7 @@
 package co.edu.udistrital.mdp.pets.services;
 
+// ===== IMPORTS INICIO =====
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,27 +9,33 @@ import org.springframework.stereotype.Service;
 import co.edu.udistrital.mdp.pets.entities.ClientEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.repositories.ClientRepository;
-import jakarta.transaction.Transactional;
 
+import jakarta.transaction.Transactional;
+// ===== IMPORTS FIN =====
+
+
+// ===== DEFINICIÓN DE CLASE INICIO =====
 @Service
 @Transactional
 public class ClientService {
+// ===== DEFINICIÓN DE CLASE FIN =====
 
+
+    // ===== DEPENDENCIAS INICIO =====
     @Autowired
     private ClientRepository clientRepository;
+    // ===== DEPENDENCIAS FIN =====
+
+
+    // ===== MÉTODOS CRUD INICIO =====
 
     public ClientEntity createClient(ClientEntity client) {
         return clientRepository.save(client);
     }
 
     public ClientEntity getClient(Long id) throws EntityNotFoundException {
-        Optional<ClientEntity> client = clientRepository.findById(id);
-
-        if (client.isEmpty()) {
-            throw new EntityNotFoundException("Client not found");
-        }
-
-        return client.get();
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
     }
 
     public List<ClientEntity> getClients() {
@@ -50,4 +56,7 @@ public class ClientService {
         ClientEntity client = getClient(id);
         clientRepository.delete(client);
     }
+
+    // ===== MÉTODOS CRUD FIN =====
+
 }
