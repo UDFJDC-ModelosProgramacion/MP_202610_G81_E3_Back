@@ -28,36 +28,37 @@ public class PetEntity extends BaseEntity {
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MedicalEventEntity> medicalEvents=new ArrayList<>();
+    private List<MedicalEventEntity> medicalEvents = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<VaccinationRecordEntity> vaccinationRecords=new ArrayList<>();
+    private List<VaccinationRecordEntity> vaccinationRecords = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
+
     private List<MediaFileEntity> photographs = new ArrayList<>();
 
     @PodamExclude
-    @OneToMany(mappedBy="pet")
-    private List<BackgroundEntity> backgrounds=new ArrayList<>();
+    @OneToMany(mappedBy = "pet")
+    private List<BackgroundEntity> backgrounds = new ArrayList<>();
     // se agrega la relacion de agregacion debil que se ve en el diagrama.
-    //es la relacionde petentity a adoptionentity
+    // es la relacionde petentity a adoptionentity
     @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<AdoptionEntity> adoptions;
 
-    //Se agrega la relacion de follow up.
+    // Se agrega la relacion de follow up.
     @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<FollowUpEntity> followUps = new ArrayList<>();
 
-    //Se agrega la relacion de Shelter.
-    @PodamExclude    
+    // Se agrega la relacion de Shelter.
+    @PodamExclude
     @ManyToOne
     private ShelterEntity shelter;
 
-    //Enum implementado.
+    // Enum implementado.
     @Enumerated(EnumType.STRING)
     private PetState petState;
 

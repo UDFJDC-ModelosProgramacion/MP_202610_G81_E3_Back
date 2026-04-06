@@ -1,0 +1,390 @@
+{
+  "info": {
+    "name": "FollowUp-Veterinary-ReturnPet-VetVisit",
+    "_postman_id": "pets-followup-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "FollowUp",
+      "item": [
+        {
+          "name": "Create FollowUp",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/followups",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observation\": \"La mascota se adapta bien al nuevo hogar\",\n  \"visitDate\": \"2026-03-01\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All FollowUps",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/followups"
+          },
+          "response": []
+        },
+        {
+          "name": "Get FollowUp by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/followups/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Get FollowUp Not Found",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/followups/999"
+          },
+          "response": []
+        },
+        {
+          "name": "Update FollowUp",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/followups/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observation\": \"Mascota con excelente adaptacion\",\n  \"visitDate\": \"2026-03-15\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update FollowUp Not Found",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/followups/999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observation\": \"Observacion\",\n  \"visitDate\": \"2026-03-15\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete FollowUp",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/followups/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete FollowUp Not Found",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/followups/999"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Veterinary",
+      "item": [
+        {
+          "name": "Create Veterinary",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/veterinaries",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dr. Carlos Perez\",\n  \"email\": \"carlos.perez@vet.com\",\n  \"phone\": \"3001234567\",\n  \"specialty\": \"Medicina general\",\n  \"availability\": \"Lunes a Viernes\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Veterinary Invalid - Name Empty",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/veterinaries",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"email\": \"carlos@vet.com\",\n  \"specialty\": \"Cirugia\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Veterinaries",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/veterinaries"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Veterinary by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/veterinaries/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Veterinary Not Found",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/veterinaries/999"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Veterinary",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/veterinaries/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dr. Luis Martinez\",\n  \"email\": \"luis.martinez@vet.com\",\n  \"phone\": \"3109876543\",\n  \"specialty\": \"Dermatologia\",\n  \"availability\": \"Lunes a Sabado\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Veterinary Not Found",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/veterinaries/999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dr. Test\",\n  \"email\": \"test@vet.com\",\n  \"specialty\": \"Cirugia\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Veterinary",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/veterinaries/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Veterinary Not Found",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/veterinaries/999"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ReturnPet",
+      "item": [
+        {
+          "name": "Create ReturnPet",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/returnpets",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Incompatibilidad con otros animales\",\n  \"returnDate\": \"2026-03-01\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create ReturnPet Invalid - Reason Empty",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/returnpets",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"\",\n  \"returnDate\": \"2026-03-01\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create ReturnPet Invalid - Future Date",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/returnpets",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Razon valida\",\n  \"returnDate\": \"2030-01-01\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All ReturnPets",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/returnpets"
+          },
+          "response": []
+        },
+        {
+          "name": "Get ReturnPet by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/returnpets/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Get ReturnPet Not Found",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/returnpets/999"
+          },
+          "response": []
+        },
+        {
+          "name": "Update ReturnPet",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/returnpets/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Problemas de salud del adoptante\",\n  \"returnDate\": \"2026-03-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update ReturnPet Not Found",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/returnpets/999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Razon valida\",\n  \"returnDate\": \"2026-03-10\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete ReturnPet",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/returnpets/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete ReturnPet Not Found",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/returnpets/999"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "VetVisit",
+      "item": [
+        {
+          "name": "Create VetVisit",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/vetvisits",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitDate\": \"2026-03-01\",\n  \"description\": \"Revision general de la mascota\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All VetVisits",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vetvisits"
+          },
+          "response": []
+        },
+        {
+          "name": "Get VetVisit by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vetvisits/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Get VetVisit Not Found",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vetvisits/999"
+          },
+          "response": []
+        },
+        {
+          "name": "Update VetVisit",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/vetvisits/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitDate\": \"2026-03-15\",\n  \"description\": \"Seguimiento post vacunacion\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update VetVisit Not Found",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "{{baseUrl}}/vetvisits/999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitDate\": \"2026-03-15\",\n  \"description\": \"Descripcion\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete VetVisit",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/vetvisits/1"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete VetVisit Not Found",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/vetvisits/999"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
