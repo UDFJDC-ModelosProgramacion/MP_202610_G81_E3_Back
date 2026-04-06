@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import co.edu.udistrital.mdp.pets.dto.VetVisitDTO;
-import co.edu.udistrital.mdp.pets.dto.VetVisitDetailDTO;
 import co.edu.udistrital.mdp.pets.entities.VetVisitEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
