@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import co.edu.udistrital.mdp.pets.dto.ReturnPetDTO;
-import co.edu.udistrital.mdp.pets.dto.ReturnPetDetailDTO;
 import co.edu.udistrital.mdp.pets.entities.ReturnPetEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
@@ -34,16 +33,16 @@ public class ReturnPetController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ReturnPetDetailDTO> findAll() {
+    public List<ReturnPetDTO> findAll() {
         List<ReturnPetEntity> returns = returnPetService.getReturns();
-        return modelMapper.map(returns, new TypeToken<List<ReturnPetDetailDTO>>() {}.getType());
+        return modelMapper.map(returns, new TypeToken<List<ReturnPetDTO>>() {}.getType());
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ReturnPetDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
+    public ReturnPetDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
         ReturnPetEntity entity = returnPetService.getReturn(id);
-        return modelMapper.map(entity, ReturnPetDetailDTO.class);
+        return modelMapper.map(entity, ReturnPetDTO.class);
     }
 
     @PutMapping("/{id}")
