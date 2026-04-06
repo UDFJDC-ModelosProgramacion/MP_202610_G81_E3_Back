@@ -12,27 +12,20 @@ import co.edu.udistrital.mdp.pets.entities.FollowUpEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.repositories.FollowUpRepository;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class FollowUpService {
 
     @Autowired
     private FollowUpRepository followUpRepository;
 
-    // Mensajes de error.
-    private static final String MSG_FOLLOWUP_NOT_FOUND = "El seguimiento con id %d no fue encontrado.";
-    private static final String MSG_OBSERVATION_INVALID = "La observación del seguimiento no puede ser nula o vacía.";
-    private static final String MSG_DATE_INVALID = "La fecha de visita no puede ser en el futuro.";
-
     @Transactional
     public FollowUpEntity createFollowUp(FollowUpEntity followUp) throws IllegalOperationException {
         if (followUp.getObservation() == null || followUp.getObservation().trim().isEmpty()) {
-            throw new IllegalOperationException(MSG_OBSERVATION_INVALID);
+            throw new IllegalOperationException("La observación del seguimiento no puede ser nula o vacía.");
         }
         if (followUp.getVisitDate() != null && followUp.getVisitDate().isAfter(LocalDate.now())) {
-            throw new IllegalOperationException(MSG_DATE_INVALID);
+            throw new IllegalOperationException("La fecha de visita no puede ser en el futuro.");
         }
         return followUpRepository.save(followUp);
     }
@@ -46,8 +39,7 @@ public class FollowUpService {
     public FollowUpEntity getFollowUp(Long id) throws EntityNotFoundException {
         Optional<FollowUpEntity> followUp = followUpRepository.findById(id);
         if (followUp.isEmpty()) {
-            throw new EntityNotFoundException(
-                String.format(MSG_FOLLOWUP_NOT_FOUND, id));
+            throw new EntityNotFoundException("El seguimiento con id " + id + " no fue encontrado.");
         }
         return followUp.get();
     }
@@ -55,21 +47,16 @@ public class FollowUpService {
     @Transactional
     public FollowUpEntity updateFollowUp(Long id, FollowUpEntity followUp)
             throws EntityNotFoundException, IllegalOperationException {
-
         Optional<FollowUpEntity> existing = followUpRepository.findById(id);
         if (existing.isEmpty()) {
-            throw new EntityNotFoundException(
-                String.format(MSG_FOLLOWUP_NOT_FOUND, id));
+            throw new EntityNotFoundException("El seguimiento con id " + id + " no fue encontrado.");
         }
-
         if (followUp.getObservation() == null || followUp.getObservation().trim().isEmpty()) {
-            throw new IllegalOperationException(MSG_OBSERVATION_INVALID);
+            throw new IllegalOperationException("La observación del seguimiento no puede ser nula o vacía.");
         }
-
         if (followUp.getVisitDate() != null && followUp.getVisitDate().isAfter(LocalDate.now())) {
-            throw new IllegalOperationException(MSG_DATE_INVALID);
+            throw new IllegalOperationException("La fecha de visita no puede ser en el futuro.");
         }
-
         followUp.setId(id);
         return followUpRepository.save(followUp);
     }
@@ -78,8 +65,7 @@ public class FollowUpService {
     public void deleteFollowUp(Long id) throws EntityNotFoundException {
         Optional<FollowUpEntity> followUp = followUpRepository.findById(id);
         if (followUp.isEmpty()) {
-            throw new EntityNotFoundException(
-                String.format(MSG_FOLLOWUP_NOT_FOUND, id));
+            throw new EntityNotFoundException("El seguimiento con id " + id + " no fue encontrado.");
         }
         followUpRepository.deleteById(id);
     }

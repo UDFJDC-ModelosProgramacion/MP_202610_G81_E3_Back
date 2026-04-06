@@ -1,5 +1,6 @@
 package co.edu.udistrital.mdp.pets.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,18 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class FollowUpEntity extends BaseEntity {
 
+    private String observation;
+    private LocalDate visitDate;
+
     @PodamExclude
     @ManyToOne
     private VeterinaryEntity veterinary;
 
+    @PodamExclude
+    @ManyToOne
     private PetEntity pet;
 
     @PodamExclude
-    @OneToMany(mappedBy="followUp")
-    private List<VetVisitEntity> vetVisits=new ArrayList<>();
+    @OneToMany(mappedBy = "followUp")
+    private List<VetVisitEntity> vetVisits = new ArrayList<>();
 }

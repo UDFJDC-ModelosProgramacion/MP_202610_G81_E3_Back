@@ -27,25 +27,26 @@ public class PetEntity extends BaseEntity {
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MedicalEventEntity> medicalEvents=new ArrayList<>();
+    private List<MedicalEventEntity> medicalEvents = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<VaccinationRecordEntity> vaccinationRecords=new ArrayList<>();
+    private List<VaccinationRecordEntity> vaccinationRecords = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MediaFileEntity> photographes=new ArrayList<>();
+    private List<MediaFileEntity> photographes = new ArrayList<>();
+    @PodamExclude
+    @OneToMany(mappedBy = "pet")
+    private List<FollowUpEntity> followUps = new ArrayList<>();
 
     @PodamExclude
-    @OneToMany(mappedBy="pet")
-    private List<BackgroundEntity> backgrounds=new ArrayList<>();
+    @OneToMany(mappedBy = "pet")
+    private List<BackgroundEntity> backgrounds = new ArrayList<>();
     // se agrega la relacion de agregacion debil que se ve en el diagrama.
-    //es la relacionde petentity a adoptionentity
+    // es la relacionde petentity a adoptionentity
     @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<AdoptionEntity> adoptions;
-
-    private FollowUpEntity followUpEntity;
 
 }
