@@ -55,34 +55,50 @@ class AdoptionServiceTest {
     }
 
     private void insertData() {
-        // Crear un adopter y un pet para relacionar
         adopter = factory.manufacturePojo(AdopterEntity.class);
         entityManager.persist(adopter);
 
         pet = factory.manufacturePojo(PetEntity.class);
         entityManager.persist(pet);
 
-        // Crear 3 adopciones de ejemplo
         for (int i = 0; i < 3; i++) {
-            AdoptionEntity adoption = factory.manufacturePojo(AdoptionEntity.class);
+
+            // 🔥 CORRECCIÓN AQUÍ
+            AdoptionEntity adoption = new AdoptionEntity();
+
             adoption.setAdopter(adopter);
             adoption.setPet(pet);
             adoption.setAdoptionDate(LocalDate.now());
             adoption.setTrialStartDate(LocalDate.now());
             adoption.setStatus(AdoptionStatus.IN_TRIAL);
 
+            // 🔥 EVITA EL ERROR DE HIBERNATE
+            adoption.setFollowUp(null);
+            adoption.setReturnPet(null);
+
             entityManager.persist(adoption);
             adoptionList.add(adoption);
         }
+
+        // 🔥 IMPORTANTE PARA SINCRONIZAR
+        entityManager.flush();
+        entityManager.clear();
     }
 
     @Test
     void testCreateAdoption() throws EntityNotFoundException {
-        AdoptionEntity newAdoption = factory.manufacturePojo(AdoptionEntity.class);
+        AdoptionEntity newAdoption = new AdoptionEntity();
+
         newAdoption.setAdopter(adopter);
         newAdoption.setPet(pet);
+        newAdoption.setFollowUp(null);
+        newAdoption.setReturnPet(null);
 
-        AdoptionEntity result = adoptionService.createAdoption(adopter.getId(), pet.getId(), newAdoption);
+        AdoptionEntity result = adoptionService.createAdoption(
+                adopter.getId(),
+                pet.getId(),
+                newAdoption
+        );
 
         assertNotNull(result);
         assertEquals(adopter.getId(), result.getAdopter().getId());
