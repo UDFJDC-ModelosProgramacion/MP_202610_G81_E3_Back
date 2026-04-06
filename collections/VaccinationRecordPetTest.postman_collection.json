@@ -1,0 +1,186 @@
+{
+  "info": {
+    "_postman_id": "659c7594-cbf7-464f-92f8-e25a7ab612bc",
+    "name": "VaccinationRecordPetTest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52814405",
+    "_collection_link": "https://go.postman.co/collection/52814405-659c7594-cbf7-464f-92f8-e25a7ab612bc?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "VaccinationRecord-GET",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\":\"flu\",\n    \"date\":\"2026-01-01\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/pets/1/vaccinationRecords",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "pets",
+            "1",
+            "vaccinationRecords"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Pet-POST Copy 2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\":\"Firulais\",\n    \"species\": \"dog\",\n    \"breed\": \"AlemanPastor\",\n    \"age\": 5,\n    \"sex\": \"male\",\n    \"size\": 20,\n    \"arriveToShelterDate\": \"2020-09-11\",\n    \"specificRequirements\": \"none\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/pets",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "pets"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "VaccinationRecordPet-POST",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"vaccineName\":\"Pentavalent\",\n    \"vaccineDate\":\"2023-04-15\",\n    \"nextDosesDate\":\"2023-05-15\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/pets/1/vaccinationRecord",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "pets",
+            "1",
+            "vaccinationRecord"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "VaccinationRecord-PUT",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"vaccineName\":\"Rabies\",\n    \"vaccineDate\":\"2023-04-15\",\n    \"nextDosesDate\":\"2023-05-15\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/pets/vaccinationRecords/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "pets",
+            "vaccinationRecords",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "VaccinationRecord-DELETE",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"description\":\"flu\",\n    \"date\":\"2026-01-01\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/pets/vaccinationRecords/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "pets",
+            "vaccinationRecords",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

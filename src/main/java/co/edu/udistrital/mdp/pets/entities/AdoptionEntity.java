@@ -2,21 +2,23 @@ package co.edu.udistrital.mdp.pets.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
-import uk.co.jemos.podam.common.PodamExclude;
-
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @Data
-
 public class AdoptionEntity extends BaseEntity {
     
     private LocalDate adoptionDate;
-    private String status;
+
+    private LocalDate trialStartDate;
+    private LocalDate trialEndDate;
+
+    @Enumerated(EnumType.STRING)
+    private AdoptionStatus status;
     
     @ManyToOne
     private AdopterEntity adopter;
@@ -24,12 +26,11 @@ public class AdoptionEntity extends BaseEntity {
     @ManyToOne
     private PetEntity pet;
 
-    @PodamExclude
-    @OneToMany(mappedBy = "adoption")
-    private List<TrialPeriodEntity> trialPeriods = new ArrayList<>();
+    @OneToOne
+    private ReturnPetEntity returnPet;
 
-    @PodamExclude
-    @OneToMany(mappedBy = "adoption")
-    private List<AdoptionDefEntity> adoptionDefs = new ArrayList<>();
+    @OneToOne
+private FollowUpEntity followUp;
+
 
 }

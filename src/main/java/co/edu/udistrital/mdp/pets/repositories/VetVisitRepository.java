@@ -3,8 +3,9 @@ package co.edu.udistrital.mdp.pets.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import co.edu.udistrital.mdp.pets.entities.TrialPeriodEntity;
+import co.edu.udistrital.mdp.pets.entities.VetVisitEntity;
 
 @Repository
-public interface TrialPeriodRepository extends JpaRepository<TrialPeriodEntity, Long> {
+public interface VetVisitRepository extends JpaRepository<VetVisitEntity,Long>{
+
 }

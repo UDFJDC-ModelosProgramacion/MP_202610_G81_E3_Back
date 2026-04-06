@@ -36,6 +36,7 @@ public class PetVaccinationRecordService {
             throw new EntityNotFoundException("registro de vacunacion no encontrado");
         }
         petEntity.get().getVaccinationRecords().add(vaccinationRecordEntity.get()); //se agrega el registro de vacunacion a la mascota
+        vaccinationRecordEntity.get().setPet(petEntity.get());
         log.info("Finaliza proceso de asociacion entre mascota y registro de vacunacion");
         return petEntity.get();
     }

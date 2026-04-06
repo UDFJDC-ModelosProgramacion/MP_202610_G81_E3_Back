@@ -1,17 +1,19 @@
 package co.edu.udistrital.mdp.pets.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
 
 @Data
 @Entity
-
 public class PetEntity extends BaseEntity {
 
     private String name;
@@ -21,24 +23,45 @@ public class PetEntity extends BaseEntity {
     private String sex;
     private Float size;
     private String temperament;
-    private Date arriveToShelter;
+    private LocalDate arriveToShelterDate;
     private String specificRequirements;
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MedicalEventEntity> medicalEvents=new ArrayList<>();
+    private List<MedicalEventEntity> medicalEvents = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<VaccinationRecordEntity> vaccinationRecords=new ArrayList<>();
+    private List<VaccinationRecordEntity> vaccinationRecords = new ArrayList<>();
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")
-    private List<MediaFileEntity> photographes=new ArrayList<>();
 
+    private List<MediaFileEntity> photographs = new ArrayList<>();
+
+    @PodamExclude
+    @OneToMany(mappedBy = "pet")
+    private List<BackgroundEntity> backgrounds = new ArrayList<>();
     // se agrega la relacion de agregacion debil que se ve en el diagrama.
-    //es la relacionde petentity a adoptionentity
+    // es la relacionde petentity a adoptionentity
+    @PodamExclude
     @OneToMany(mappedBy = "pet")
     private List<AdoptionEntity> adoptions;
 
+    // Se agrega la relacion de follow up.
+    @PodamExclude
+    @OneToMany(mappedBy = "pet")
+    private List<FollowUpEntity> followUps = new ArrayList<>();
+
+    // Se agrega la relacion de Shelter.
+    @PodamExclude
+    @ManyToOne
+    private ShelterEntity shelter;
+
+    // Enum implementado.
+    @Enumerated(EnumType.STRING)
+    private PetState petState;
+
+    @Enumerated(EnumType.STRING)
+    private ArriveToShelter arriveToShelter;
 }

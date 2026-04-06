@@ -1,5 +1,6 @@
 package co.edu.udistrital.mdp.pets.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +91,17 @@ public class MessageService {
         messageRepository.deleteById(messageId);
 
         log.info("End delete message process with id: {}", messageId);
+    }
+
+    public List<MessageEntity> getMessages() {
+        log.info("Fetching all messages");
+        return messageRepository.findAll();
+    }
+
+    public MessageEntity getMessage(Long id) throws EntityNotFoundException {
+        log.info("Fetching message with id: {}", id);
+
+        return messageRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Message not found"));
     }
 }

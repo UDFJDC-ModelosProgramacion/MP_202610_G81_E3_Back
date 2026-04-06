@@ -1,19 +1,21 @@
 package co.edu.udistrital.mdp.pets.entities;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import uk.co.jemos.podam.common.PodamExclude;
 
+
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
-public class TrialPeriodEntity extends BaseEntity {
+public class VetVisitEntity extends BaseEntity{
+    private LocalDate visitDate;
+    private String description;
 
     @PodamExclude
     @ManyToOne
-    private AdoptionEntity adoption;
-
+    private FollowUpEntity followUp;
     
 }

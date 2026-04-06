@@ -1,0 +1,2128 @@
+{
+  "info": {
+    "_postman_id": "38191d02-df94-44a2-8d4a-927cd64a2a4e",
+    "name": "Pet Adoption API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50442956",
+    "_collection_link": "https://go.postman.co/collection/50442956-38191d02-df94-44a2-8d4a-927cd64a2a4e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Shelter",
+      "item": [
+        {
+          "name": "Create Shelter",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Patitas Suaves\",\n    \"city\": \"Bogota\",\n    \"address\": \"Calle 40\",\n    \"email\": \"patitassuaves@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/shelters",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Shelter",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": 1,\n  \"name\": \"Patitas Suaves\",\n  \"city\": \"Bogota\",\n  \"address\": \"Calle 40\",\n  \"email\": \"patitassuaves@email.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Obligatory Parameters",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"All required fields must be filled out.\",\n  \"errors\": [\n    { \"field\": \"name\", \"message\": \"name is required\" },\n    { \"field\": \"city\", \"message\": \"city is required\" },\n    { \"field\": \"adress\", \"message\": \"address is required\" },\n    { \"field\": \"email\", \"message\": \"email is required\" }\n  ],\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Existant Name",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"Shelter with the same name already exists\",\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Existant Email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"Shelter with the same email already exists\",\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Shelters",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"Patitas Suaves\",\n    \"city\": \"Bogota\",\n    \"address\": \"Calle 40\",\n    \"email\": \"patitas@email.com\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Huellitas\",\n    \"city\": \"Medellin\",\n    \"address\": \"Calle 10\",\n    \"email\": \"huellitas@email.com\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/shelters",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Shelters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"Patitas Suaves\",\n    \"city\": \"Bogota\",\n    \"address\": \"Calle 40\",\n    \"email\": \"patitassuaves@email.com\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Huellitas\",\n    \"city\": \"Medellin\",\n    \"address\": \"Calle 10\",\n    \"email\": \"huellitas@email.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": 1,\n    \"name\": \"Patitas Suaves\",\n    \"city\": \"Bogota\",\n    \"address\": \"Calle 40\",\n    \"email\": \"patitassuaves@email.com\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Huellitas\",\n    \"city\": \"Medellin\",\n    \"address\": \"Calle 10\",\n    \"email\": \"huellitas@email.com\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get a Shelter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Patitas Suaves\",\r\n  \"city\": \"Bogota\",\r\n  \"address\": \"Calle 40\",\r\n  \"email\": \"patitas@email.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters",
+                "{{shelter_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get a Shelter",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Patitas Suaves\",\r\n  \"city\": \"Bogota\",\r\n  \"address\": \"Calle 40\",\r\n  \"email\": \"patitas@email.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Shelter with Name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/shelters?name=suaves",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "suaves"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Shelter with Name",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseURL}}/shelters?name=suaves",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "suaves"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter with that name not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters?name=suaves",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "suaves"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Shelter with City",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/shelters?city=Bogota",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Bogota"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Shelter with City",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/shelters?city=Bogota",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ],
+                  "query": [
+                    {
+                      "key": "city",
+                      "value": "Bogota"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter with that city not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters?city=Bogota",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters"
+                  ],
+                  "query": [
+                    {
+                      "key": "city",
+                      "value": "Bogota"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Shelter with ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Patitas Suaves\",\r\n  \"city\": \"Bogota\",\r\n  \"address\": \"Calle 40\",\r\n  \"email\": \"patitassuaves@email.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Get Shelter with ID",
+              "originalRequest": {
+                "method": "GET",
+                "header": []
+              },
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter with that ID not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "Update Shelter",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Patitas Suavecitas\",\n    \"city\": \"Bogota\",\n    \"address\": \"Calle 60\",\n    \"email\": \"patitassuavecitas@email.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters",
+                "{{shelter_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Shelter",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\" : 1,\n    \"name\": \"Patitas Suavecitas\",\n    \"city\": \"Bogota\",\n    \"address\": \"Calle 60\",\n    \"email\": \"patitassuavecitas@email.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Resource not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error -Obligatory Parameters",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"All required fields must be filled out.\",\n  \"errors\": [\n    { \"field\": \"name\", \"message\": \"name is required\" },\n    { \"field\": \"city\", \"message\": \"city is required\" },\n    { \"field\": \"adress\", \"message\": \"address is required\" },\n    { \"field\": \"email\", \"message\": \"email is required\" }\n  ],\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Existant Name",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"apierror\":{\n        \"status\": \"CONFLICT\",\n        \"message\": \"Shelter with the same name already exists.\",\n        \"timestamp\": \"2026-04-02T13:00:00\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Existant Email",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"apierror\":{\n        \"status\": \"CONFLICT\",\n        \"message\": \"Shelter with the same email already exists.\",\n        \"timestamp\": \"2026-04-02T13:00:00\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Delete Shelter",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelters",
+                "{{shelter_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete Shelter",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Resource not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Events",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 400,\r\n  \"error\": \"Bad Request\",\r\n  \"message\": \"The shelter has events soon, delete the events before.\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelters/{{shelter_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelters",
+                    "{{shelter_id_1}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ShelterEvent",
+      "item": [
+        {
+          "name": "Create Shelter Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"date\": \"2026-04-02\",\r\n    \"name\": \"Evento de Adopcion\",\r\n    \"description\": \"En este evento podrán adoptar mascotas\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/shelterevents",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelterevents"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Shelter Event",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"date\": \"2026-04-02\",\r\n    \"name\": \"Evento de Adopcion\",\r\n    \"description\": \"En este evento podrán adoptar mascotas\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Obligatory Parameters",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"All required fields must be filled out.\",\n  \"errors\": [\n    { \"field\": \"date\", \"message\": \"date is required\" },\n    { \"field\": \"name\", \"message\": \"name is required\" },\n    { \"field\": \"description\", \"message\": \"description is required\" }\n  ],\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Existant Date",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"Shelter event with the same date exists\",\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Events",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelterevents",
+                "{{shelterevents_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Events",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter events not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Event with Name",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/shelterevents?name=desparacitacion",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelterevents"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "desparacitacion"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Event with Name",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents?name=desparacitacion",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "desparacitacion"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter event name not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents?name=desparacitacion",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "desparacitacion"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Update Shelter Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"date\": \"2026-04-02T13:00:00\",\r\n    \"name\": \"Evento de Desparacitacion\",\r\n    \"description\": \"En este evento podrán desparacitar a mascotas\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelterevents",
+                "{{shelterevents_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Shelter Event",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"date\": \"2026-04-06T13:00:00\",\r\n    \"name\": \"Evento de Desparacitacion\",\r\n    \"description\": \"En este evento podrán desparacitar a mascotas\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Obligatory Parameters",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"All required fields must be filled out.\",\n  \"errors\": [\n    { \"field\": \"date\", \"message\": \"date is required\" },\n    { \"field\": \"name\", \"message\": \"name is required\" },\n    { \"field\": \"description\", \"message\": \"description is required\" }\n  ],\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Existant Date",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"Shelter event with the same date exists\",\n  \"timestamp\": \"2026-04-02T13:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter event not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Delete Shelter Event",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "shelterevents",
+                "{{shelterevents_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete Shelter Event",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Shelter event not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/shelterevents/{{shelterevents_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "shelterevents",
+                    "{{shelterevents_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Message",
+      "item": [
+        {
+          "name": "Create Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"author\": \"Client\",\r\n    \"date\": \"2026-04-02T13:00:00\",\r\n    \"content\": \"¿Como es el proceso de adopcion?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/messages",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "messages"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Create Message",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"author\": \"Client\",\r\n    \"date\": \"2026-04-02T13:00:00\",\r\n    \"content\": \"¿Como es el proceso de adopcion?\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/messages",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Obligatory Parameters",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 400,\r\n  \"error\": \"Bad Request\",\r\n  \"message\": \"All required fields must be filled out.\",\r\n  \"errors\": [\r\n    { \"field\": \"author\", \"message\": \"author is required\" },\r\n    { \"field\": \"date\", \"message\": \"date is required\" },\r\n    { \"field\": \"content\", \"message\": \"content is required\" }\r\n  ],\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/messages",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Get Message",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "   pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "messages",
+                "{{messages_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Message",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "{{messages_id_1}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Message not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "{{messages_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Update Message",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"author\": \"Client\",\r\n    \"date\": \"2026-04-02T13:00:00\",\r\n    \"content\": \"¿Como es el proceso de adoptar mascotas?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "messages",
+                "{{messages_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Message",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"author\": \"Client\",\r\n    \"date\": \"2026-04-02T13:00:00\",\r\n    \"content\": \"¿Como es el proceso de adoptar mascotas?\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "{{messages_id_1}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Message not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "{{messages_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "messages",
+                "{{messages_id_1}}"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Delete Message",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "{{messages_id_1}}"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": ""
+            },
+            {
+              "name": "Error - Not Found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"status\": 404,\r\n  \"error\": \"Not Found\",\r\n  \"message\": \"Message not found\",\r\n  \"timestamp\": \"2026-04-02T13:00:00\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/messages/{{messages_id_1}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "messages",
+                    "{{messages_id_1}}"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "body": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
