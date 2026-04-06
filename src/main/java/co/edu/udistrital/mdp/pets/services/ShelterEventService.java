@@ -3,10 +3,12 @@ package co.edu.udistrital.mdp.pets.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.udistrital.mdp.pets.entities.ShelterEntity;
 import co.edu.udistrital.mdp.pets.entities.ShelterEventEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.repositories.ShelterEventRepository;
+import co.edu.udistrital.mdp.pets.repositories.ShelterRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Optional;
@@ -16,8 +18,12 @@ import java.util.List;
 @Service
 public class ShelterEventService {
     @Autowired
-    //Repositorio de refugios, para persistencia.
+    //Repositorio de eventos de refugios, para persistencia.
     private ShelterEventRepository shelterEventRepository;
+
+    //Repositorio de refugios, para persistencia.
+    @Autowired
+    private ShelterRepository shelterRepository;
 
     //Metodo para evaluar la validez del evento.
     private void validateShelterEvent(ShelterEventEntity shelterEventEntity)
@@ -41,59 +47,66 @@ public class ShelterEventService {
 
     //Metodo para crear un evento
     @Transactional
-    public ShelterEventEntity createShelterEvent (ShelterEventEntity shelterEventEntity)
-    throws IllegalOperationException, EntityNotFoundException{
-        log.info("Start shelter event creation...");
-        //Uso del metodo privado.
-        validateShelterEvent(shelterEventEntity);
+    public ShelterEventEntity createShelterEvent(ShelterEventEntity shelterEventEntity)
+        throws IllegalOperationException, EntityNotFoundException {
+    log.info("Start shelter event creation...");
 
-        List<ShelterEventEntity> events = shelterEventRepository.findByDate(shelterEventEntity.getDate());
+    // Valida datos básicos.
+    validateShelterEvent(shelterEventEntity);
+    Long shelterId = shelterEventEntity.getShelter().getId();
 
-        //Verificar si ya existe evento con esa fecha.
-        if(!events.isEmpty())
-            throw new IllegalOperationException("There is already an event with that date.");
+    if (shelterId == null) {
+        throw new IllegalOperationException("Shelter ID is required");
+    }
+    ShelterEntity shelter = shelterRepository.findById(shelterId)
+            .orElseThrow(() -> new EntityNotFoundException("Shelter not found"));
+    shelterEventEntity.setShelter(shelter);
 
-        //Si es correcto guarda el evento
-        return shelterEventRepository.save(shelterEventEntity);
+    // Validar fecha repetida para el mismo refugio.
+    List<ShelterEventEntity> events = shelterEventRepository.findByDate(shelterEventEntity.getDate());
+    for (ShelterEventEntity e : events) {
+        if (e.getShelter().getId().equals(shelterId)) {
+            throw new IllegalOperationException("There is already an event with that date in this shelter.");
+        }
+    }
+    return shelterEventRepository.save(shelterEventEntity);
     }
 
     //Metodo para editar un evento.
     @Transactional
-    public ShelterEventEntity updateShelterEventEntity (long shelterEventId, ShelterEventEntity event)
-    throws IllegalOperationException, EntityNotFoundException{
-        log.info("Starts update shelter event with id: {}", shelterEventId);
+    public ShelterEventEntity updateShelterEventEntity(Long shelterEventId, ShelterEventEntity event)
+        throws IllegalOperationException, EntityNotFoundException { 
+            log.info("Starts update shelter event with id: {}", shelterEventId);
+    // Busca evento existente
+    ShelterEventEntity shelterEventToUpdate = shelterEventRepository.findById(shelterEventId)
+        .orElseThrow(() -> new EntityNotFoundException("Shelter event not found."));
+    validateShelterEvent(event);
 
-        //Busca el evento del refugio.
-        Optional<ShelterEventEntity> shelterEventEntity = shelterEventRepository.findById(shelterEventId);
+    Long shelterId = event.getShelter().getId();
 
-        //Verifica su existencia.
-        if(shelterEventEntity.isEmpty())
-            throw new EntityNotFoundException("Shelter event not found.");
+    if (shelterId == null) {
+        throw new IllegalOperationException("Shelter ID is required");
+    }
 
-        //Obtiene el refugio a actualizar.
-        ShelterEventEntity shelterEventToUpdate = shelterEventEntity.get();
+    ShelterEntity shelter = shelterRepository.findById(shelterId)
+            .orElseThrow(() -> new EntityNotFoundException("Shelter not found"));
+    List<ShelterEventEntity> dateCheck = shelterEventRepository.findByDate(event.getDate());
 
-        //Uso del método.
-        validateShelterEvent(event);
+    for (ShelterEventEntity e : dateCheck) {
+        if (!e.getId().equals(shelterEventId)
+                && e.getShelter().getId().equals(shelterId)) {
 
-        //Verificar fecha.
-        List<ShelterEventEntity> dateCheck = shelterEventRepository.findByDate(event.getDate());
-
-        for (ShelterEventEntity e : dateCheck) {
-            if(!e.getId().equals(shelterEventId)) {
-                throw new IllegalOperationException("There is already an event with that date.");
-            }
+            throw new IllegalOperationException(
+                    "There is already an event with that date in this shelter.");
         }
+    }
 
-
-        //Actualizar si cumple con todas las condiciones.
-        shelterEventToUpdate.setShelter(event.getShelter());
-        shelterEventToUpdate.setName(event.getName());
-        shelterEventToUpdate.setDate(event.getDate());
-        shelterEventToUpdate.setDescription(event.getDescription());
-
-        log.info("End update shelter event with the id: {}", shelterEventId);
-        return shelterEventRepository.save(shelterEventToUpdate);
+    shelterEventToUpdate.setName(event.getName());
+    shelterEventToUpdate.setDescription(event.getDescription());
+    shelterEventToUpdate.setDate(event.getDate());
+    shelterEventToUpdate.setShelter(shelter);
+    log.info("End update shelter event with the id: {}", shelterEventId);
+    return shelterEventRepository.save(shelterEventToUpdate);
     }
 
     //Metodo para borrar un evento existente.
