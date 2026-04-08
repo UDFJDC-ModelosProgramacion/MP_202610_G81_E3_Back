@@ -50,10 +50,7 @@ class AdoptionControllerTest {
         initObjects();
         initMocks();
     }
-
-    // =========================
-    // 🔹 INICIALIZACIÓN
-    // =========================
+    //INICIALIZACIÓN
     private void initObjects() {
 
         objectMapper = new ObjectMapper();
@@ -91,9 +88,7 @@ class AdoptionControllerTest {
                 .thenReturn(Arrays.asList(adoptionDTO));
     }
 
-    // =========================
-    // 🔹 TESTS
-    // =========================
+    //TESTS
 
     @Test
     void testFindAll() throws Exception {
