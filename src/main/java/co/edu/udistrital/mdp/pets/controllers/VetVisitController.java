@@ -9,14 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import co.edu.udistrital.mdp.pets.dto.VetVisitDTO;
-import co.edu.udistrital.mdp.pets.dto.VetVisitDetailDTO;
 import co.edu.udistrital.mdp.pets.entities.VetVisitEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.services.VetVisitService;
 
 @RestController
-@RequestMapping("/pets")
+@RequestMapping("/vet-visits")
 public class VetVisitController {
 
     @Autowired
@@ -27,23 +26,23 @@ public class VetVisitController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VetVisitDTO create(@RequestBody VetVisitDTO vetVisitDTO) throws IllegalOperationException {
+    public VetVisitDTO create(@RequestBody VetVisitDTO vetVisitDTO) throws IllegalOperationException, EntityNotFoundException {
         VetVisitEntity entity = modelMapper.map(vetVisitDTO, VetVisitEntity.class);
         return modelMapper.map(vetVisitService.createVetVisit(entity), VetVisitDTO.class);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<VetVisitDetailDTO> findAll() {
+    public List<VetVisitDTO> findAll() {
         List<VetVisitEntity> vetVisits = vetVisitService.getVetVisits();
-        return modelMapper.map(vetVisits, new TypeToken<List<VetVisitDetailDTO>>() {}.getType());
+        return modelMapper.map(vetVisits, new TypeToken<List<VetVisitDTO>>() {}.getType());
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public VetVisitDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
+    public VetVisitDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
         VetVisitEntity entity = vetVisitService.getVetVisit(id);
-        return modelMapper.map(entity, VetVisitDetailDTO.class);
+        return modelMapper.map(entity, VetVisitDTO.class);
     }
 
     @PutMapping("/{id}")
@@ -56,7 +55,7 @@ public class VetVisitController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) throws EntityNotFoundException {
+    public void delete(@PathVariable Long id) throws EntityNotFoundException, IllegalOperationException {
         vetVisitService.deleteVetVisit(id);
     }
 }

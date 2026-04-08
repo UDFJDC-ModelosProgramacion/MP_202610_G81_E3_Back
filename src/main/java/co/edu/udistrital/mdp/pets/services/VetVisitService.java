@@ -33,6 +33,7 @@ public class VetVisitService {
         }
 
     }
+
     @Transactional
     public VetVisitEntity updateVetVisit(Long id, VetVisitEntity vetVisitEntity) throws EntityNotFoundException {
         log.info("Inicia proceso de actualización de visita medica");
@@ -69,10 +70,25 @@ public class VetVisitService {
         log.info("Proceso de borrado terminado");
     }
 
-
-
     private boolean isStringValid(String texto) {
         return !(texto == null || texto.isEmpty());
     }
 
+    //Se añadieron los getters de Vet Visist y la lista de Vet Visits.
+    @Transactional
+    public VetVisitEntity getVetVisit(Long id) throws EntityNotFoundException {
+        log.info("Inicia proceso de consulta de visita medica");
+        Optional<VetVisitEntity> vetVisitEntity = vetVisitRepository.findById(id);
+        if (vetVisitEntity.isEmpty()) {
+            throw new EntityNotFoundException("Visita medica no encontrada");
+        }
+        log.info("Termina el proceso de consulta de visita medica");
+        return vetVisitEntity.get();
+    }
+
+    @Transactional
+    public java.util.List<VetVisitEntity> getVetVisits() {
+        log.info("Inicia proceso de consulta de todas las visitas medicas");
+        return vetVisitRepository.findAll();
+    }
 }
