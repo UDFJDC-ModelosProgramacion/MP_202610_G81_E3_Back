@@ -222,6 +222,17 @@ class ReturnPetServiceTest {
     }
 
     @Test
+    void testCreateReturnReasonNull() {
+        assertThrows(IllegalOperationException.class, () -> {
+            ReturnPetEntity newReturn = factory.manufacturePojo(ReturnPetEntity.class);
+            newReturn.setReason(null);
+            newReturn.setReturnDate(LocalDate.now());
+            returnPetService.createReturn(newReturn);
+        });
+    }
+
+
+    @Test
     void testDeleteReturnNotFound() {
         assertThrows(EntityNotFoundException.class, () -> returnPetService.deleteReturn(0L));
     }
