@@ -15,6 +15,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 
 import co.edu.udistrital.mdp.pets.MainApplication;
+import co.edu.udistrital.mdp.pets.entities.AdopterEntity;
+import co.edu.udistrital.mdp.pets.entities.AdoptionEntity;
+import co.edu.udistrital.mdp.pets.entities.FollowUpEntity;
+import co.edu.udistrital.mdp.pets.entities.PetEntity;
 import co.edu.udistrital.mdp.pets.entities.ReturnPetEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
@@ -49,21 +53,61 @@ class ReturnPetServiceTest {
 
     private void insertData() {
         for (int i = 0; i < 3; i++) {
+            // Crear y persistir Adopter.
+            AdopterEntity adopter = factory.manufacturePojo(AdopterEntity.class);
+            entityManager.persist(adopter);
+            // Crear y persistir Pet.
+            PetEntity pet = factory.manufacturePojo(PetEntity.class);
+            entityManager.persist(pet);
+            // Crear y persistir FollowUp.
+            FollowUpEntity followUp = factory.manufacturePojo(FollowUpEntity.class);
+            entityManager.persist(followUp);
+            // Crear Adoption.
+            AdoptionEntity adoption = factory.manufacturePojo(AdoptionEntity.class);
+            adoption.setAdopter(adopter);
+            adoption.setPet(pet);
+            adoption.setFollowUp(followUp);
+            entityManager.persist(adoption);
+            // Crear ReturnPet.
             ReturnPetEntity returnPetEntity = factory.manufacturePojo(ReturnPetEntity.class);
             returnPetEntity.setReason("Razón de devolución " + i);
             returnPetEntity.setReturnDate(LocalDate.now().minusDays(i + 1));
+            returnPetEntity.setAdoption(adoption);
+
+            //Sincronizar la relación.
+            adoption.setReturnPet(returnPetEntity);
+
             entityManager.persist(returnPetEntity);
+            entityManager.persist(adoption);
             returnList.add(returnPetEntity);
         }
     }
-
     // Tests: createReturn
 
     @Test
     void testCreateReturnValid() throws IllegalOperationException {
+        AdopterEntity adopter = factory.manufacturePojo(AdopterEntity.class);
+        entityManager.persist(adopter);
+
+        PetEntity pet = factory.manufacturePojo(PetEntity.class);
+        entityManager.persist(pet);
+
+        FollowUpEntity followUp = factory.manufacturePojo(FollowUpEntity.class);
+        entityManager.persist(followUp);
+
+        AdoptionEntity adoption = factory.manufacturePojo(AdoptionEntity.class);
+        adoption.setAdopter(adopter);
+        adoption.setPet(pet);
+        adoption.setFollowUp(followUp);
+        entityManager.persist(adoption);
+
         ReturnPetEntity newReturn = factory.manufacturePojo(ReturnPetEntity.class);
         newReturn.setReason("Problemas de salud del adoptante");
         newReturn.setReturnDate(LocalDate.now());
+        newReturn.setAdoption(adoption);
+
+        //Sincronizar relación.
+        adoption.setReturnPet(newReturn);
 
         ReturnPetEntity result = returnPetService.createReturn(newReturn);
 
@@ -71,16 +115,6 @@ class ReturnPetServiceTest {
         ReturnPetEntity entity = entityManager.find(ReturnPetEntity.class, result.getId());
         assertEquals(newReturn.getReason(), entity.getReason());
         assertEquals(newReturn.getReturnDate(), entity.getReturnDate());
-    }
-
-    @Test
-    void testCreateReturnReasonNull() {
-        assertThrows(IllegalOperationException.class, () -> {
-            ReturnPetEntity newReturn = factory.manufacturePojo(ReturnPetEntity.class);
-            newReturn.setReason(null);
-            newReturn.setReturnDate(LocalDate.now());
-            returnPetService.createReturn(newReturn);
-        });
     }
 
     @Test
@@ -186,6 +220,17 @@ class ReturnPetServiceTest {
         ReturnPetEntity deleted = entityManager.find(ReturnPetEntity.class, entity.getId());
         assertNull(deleted);
     }
+
+    @Test
+    void testCreateReturnReasonNull() {
+        assertThrows(IllegalOperationException.class, () -> {
+            ReturnPetEntity newReturn = factory.manufacturePojo(ReturnPetEntity.class);
+            newReturn.setReason(null);
+            newReturn.setReturnDate(LocalDate.now());
+            returnPetService.createReturn(newReturn);
+        });
+    }
+
 
     @Test
     void testDeleteReturnNotFound() {
