@@ -16,6 +16,7 @@ import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.services.ShelterService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/shelters")
 public class ShelterController {
 
@@ -67,5 +68,16 @@ public class ShelterController {
             throws EntityNotFoundException, IllegalOperationException {
 
         shelterService.deleteShelter(id);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<ShelterDetailDTO> search(@RequestParam String keyword) {
+        List<ShelterEntity> list = shelterService.searchShelters(keyword);
+
+        return modelMapper.map(
+            list,
+            new TypeToken<List<ShelterDetailDTO>>() {}.getType()
+        );
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShelterRepository extends JpaRepository <ShelterEntity, Long>{
     
+    //Se añade busqueda por nombre y ciudad.
+    List<ShelterEntity> findByNameContainingIgnoreCaseOrCityContainingIgnoreCase(String name, String city);
     //Búsqueda por nombre ignore case.
     List<ShelterEntity> findByNameContainingIgnoreCase(String name);
     //Búsqueda por nombre.

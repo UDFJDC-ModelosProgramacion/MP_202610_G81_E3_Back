@@ -17,6 +17,7 @@ public class ShelterEntity extends BaseEntity {
     private String city;
     private String address;
     private String email;
+    private String image;
 
     @PodamExclude
     @OneToMany(mappedBy="shelter")
@@ -40,4 +41,5 @@ public class ShelterEntity extends BaseEntity {
     @PodamExclude
     @OneToMany(mappedBy = "shelter")
     private List<PetEntity> pets = new ArrayList<>();
+
 }
