@@ -103,6 +103,7 @@ public class ShelterService {
         shelterToUpdate.setCity(shelter.getCity());
         shelterToUpdate.setAddress(shelter.getAddress());
         shelterToUpdate.setEmail(shelter.getEmail());
+        shelterToUpdate.setImage(shelter.getImage());
 
         log.info("End update shelter with the id: {}", shelterId);
         return shelterRepository.save(shelterToUpdate);
@@ -139,5 +140,11 @@ public class ShelterService {
 
         return shelterRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Shelter not found"));
+    }
+
+    public List<ShelterEntity> searchShelters(String keyword) {
+        log.info("Searching shelters with keyword (name or city): {}", keyword);
+
+        return shelterRepository.findByNameContainingIgnoreCaseOrCityContainingIgnoreCase(keyword, keyword);
     }
 }

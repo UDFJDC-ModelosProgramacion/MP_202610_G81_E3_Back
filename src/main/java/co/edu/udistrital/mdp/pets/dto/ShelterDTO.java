@@ -6,6 +6,7 @@ import lombok.Data;
 public class ShelterDTO {
     private String name;
     private String city;
-    private String adress;
+    private String address;
     private String email;
+    private String image;
 }
