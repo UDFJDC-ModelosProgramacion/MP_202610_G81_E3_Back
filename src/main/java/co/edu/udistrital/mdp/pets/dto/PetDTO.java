@@ -13,7 +13,7 @@ public class PetDTO {
     private String breed;
     private Integer age;
     private String sex;
-    private Float size;
+    private String size;
     private String temperament;
     private LocalDate arriveToShelterDate;
     private String specificRequirements;
