@@ -15,7 +15,7 @@ import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.pets.services.ReturnPetService;
 
 @RestController
-@RequestMapping("/api/returnpets")
+@RequestMapping("/returnpets")
 public class ReturnPetController {
 
     @Autowired

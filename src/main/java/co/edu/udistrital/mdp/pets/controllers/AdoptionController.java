@@ -21,6 +21,8 @@ import org.modelmapper.TypeToken;
 import co.edu.udistrital.mdp.pets.services.AdoptionService;
 import co.edu.udistrital.mdp.pets.dto.AdoptionDTO;
 import co.edu.udistrital.mdp.pets.entities.AdoptionEntity;
+import co.edu.udistrital.mdp.pets.entities.AdopterEntity;
+import co.edu.udistrital.mdp.pets.entities.PetEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 // ===== IMPORTS FIN =====
 
@@ -45,25 +47,51 @@ public class AdoptionController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AdoptionDTO> findAll() {
+
         List<AdoptionEntity> adoptions = adoptionService.getAdoptions();
-        return modelMapper.map(adoptions, new TypeToken<List<AdoptionDTO>>() {}.getType());
+
+        return modelMapper.map(
+                adoptions,
+                new TypeToken<List<AdoptionDTO>>() {}.getType()
+        );
     }
 
     // GET /adoptions/{id} → traer una adopción por ID
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AdoptionDTO findById(@PathVariable Long id) throws EntityNotFoundException {
+    public AdoptionDTO findById(@PathVariable Long id)
+            throws EntityNotFoundException {
+
         AdoptionEntity adoption = adoptionService.getAdoption(id);
+
         return modelMapper.map(adoption, AdoptionDTO.class);
     }
 
-    // POST /adoptions → crear una nueva adopción
+    // POST /adoptions → crear nueva adopción
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AdoptionDTO create(@RequestBody AdoptionDTO adoptionDTO) throws EntityNotFoundException {
+    public AdoptionDTO create(@RequestBody AdoptionDTO adoptionDTO)
+            throws EntityNotFoundException {
 
-        AdoptionEntity adoptionEntity = modelMapper.map(adoptionDTO, AdoptionEntity.class);
+        // ===== CREAR ENTITY MANUALMENTE =====
+        AdoptionEntity adoptionEntity = new AdoptionEntity();
 
+        // Campos simples
+        adoptionEntity.setStatus(adoptionDTO.getStatus());
+        adoptionEntity.setAdoptionDate(adoptionDTO.getAdoptionDate());
+        adoptionEntity.setTrialEndDate(adoptionDTO.getTrialEndDate());
+
+        // ===== RELACIÓN ADOPTER =====
+        AdopterEntity adopter = new AdopterEntity();
+        adopter.setId(adoptionDTO.getAdopterId());
+        adoptionEntity.setAdopter(adopter);
+
+        // ===== RELACIÓN PET =====
+        PetEntity pet = new PetEntity();
+        pet.setId(adoptionDTO.getPetId());
+        adoptionEntity.setPet(pet);
+
+        // ===== GUARDAR =====
         AdoptionEntity savedAdoption = adoptionService.createAdoption(
                 adoptionDTO.getAdopterId(),
                 adoptionDTO.getPetId(),
@@ -73,14 +101,23 @@ public class AdoptionController {
         return modelMapper.map(savedAdoption, AdoptionDTO.class);
     }
 
-    // PUT /adoptions/{id} → actualizar adopción (solo status y trialEndDate)
+    // PUT /adoptions/{id} → actualizar adopción
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AdoptionDTO update(@PathVariable Long id, @RequestBody AdoptionDTO adoptionDTO) throws EntityNotFoundException {
+    public AdoptionDTO update(
+            @PathVariable Long id,
+            @RequestBody AdoptionDTO adoptionDTO
+    ) throws EntityNotFoundException {
 
-        AdoptionEntity adoptionEntity = modelMapper.map(adoptionDTO, AdoptionEntity.class);
+        // ===== CREAR ENTITY MANUALMENTE =====
+        AdoptionEntity adoptionEntity = new AdoptionEntity();
 
-        AdoptionEntity updatedAdoption = adoptionService.updateAdoption(id, adoptionEntity);
+        adoptionEntity.setStatus(adoptionDTO.getStatus());
+        adoptionEntity.setAdoptionDate(adoptionDTO.getAdoptionDate());
+        adoptionEntity.setTrialEndDate(adoptionDTO.getTrialEndDate());
+
+        AdoptionEntity updatedAdoption =
+                adoptionService.updateAdoption(id, adoptionEntity);
 
         return modelMapper.map(updatedAdoption, AdoptionDTO.class);
     }
@@ -88,11 +125,12 @@ public class AdoptionController {
     // DELETE /adoptions/{id} → eliminar adopción
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) throws EntityNotFoundException {
+    public void delete(@PathVariable Long id)
+            throws EntityNotFoundException {
+
         adoptionService.deleteAdoption(id);
     }
 
     // ===== MÉTODOS FIN =====
-
 }
 // ===== DEFINICIÓN DE CLASE FIN =====
