@@ -1,6 +1,8 @@
 package co.edu.udistrital.mdp.pets.controllers;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;

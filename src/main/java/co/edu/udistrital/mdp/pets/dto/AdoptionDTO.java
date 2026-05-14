@@ -16,6 +16,7 @@ public class AdoptionDTO {
 
 
     // ===== ATRIBUTOS INICIO =====
+    private Long id;
     private LocalDate adoptionDate;
     
     private LocalDate trialStartDate;
