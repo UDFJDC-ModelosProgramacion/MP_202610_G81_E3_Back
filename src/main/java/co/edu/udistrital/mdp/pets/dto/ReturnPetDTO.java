@@ -8,4 +8,6 @@ public class ReturnPetDTO {
     private Long id;
     private String reason;
     private LocalDate returnDate;
+    private Long adoptionId;  // ← agrega esta línea
+
 }

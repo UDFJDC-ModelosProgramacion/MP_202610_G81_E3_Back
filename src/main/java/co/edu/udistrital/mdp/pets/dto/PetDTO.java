@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class PetDTO {
+    private Long id;  // ← agrega esta línea
     private String name;
     private String species;
     private String breed;
