@@ -1,10 +1,9 @@
 package co.edu.udistrital.mdp.pets.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
+import co.edu.udistrital.mdp.pets.entities.MediaFileEntity;
 import co.edu.udistrital.mdp.pets.entities.PetEntity;
 import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
-import co.edu.udistrital.mdp.pets.entities.MediaFileEntity; 
-import java.time.LocalDate; 
 import jakarta.transaction.Transactional;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -61,7 +59,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
         newPet.setSpecies("Perro");
         newPet.setBreed("Labrador");
         newPet.setSex("Macho");
-        newPet.setSize(50.0f);
+        newPet.setSize("grande");
         newPet.setArriveToShelterDate(LocalDate.now());
         newPet.setSpecificRequirements("Ninguno");
 

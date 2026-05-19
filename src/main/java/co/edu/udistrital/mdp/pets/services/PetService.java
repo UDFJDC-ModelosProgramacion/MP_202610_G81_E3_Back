@@ -26,8 +26,8 @@ public class PetService {
 
         //revisa que la mascota tenga todos los datos llenos
         if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) && isStringValid(petEntity.getBreed())
-                && isStringValid(petEntity.getSex()) && petEntity.getSize() != null && petEntity.getArriveToShelterDate() != null
-                && isStringValid(petEntity.getSpecificRequirements()) ) {
+                && isStringValid(petEntity.getSex()) && isStringValid(petEntity.getSize()) && petEntity.getArriveToShelterDate() != null
+                && isStringValid(petEntity.getSpecificRequirements())) {
 
             return petRepository.save(petEntity);
 
@@ -98,22 +98,85 @@ public class PetService {
 
     @Transactional
     public List<PetEntity> getPets() {
-		log.info("Inicia proceso de consultar todas las macotas");
-		return petRepository.findAll();
-	}
+        log.info("Inicia proceso de consultar todas las macotas");
+        return petRepository.findAll();
+    }
 
     @Transactional
-	public PetEntity getPet(Long petId) throws EntityNotFoundException {
-		log.info("Inicia proceso de consula de la mascota", petId);
-		Optional<PetEntity> petEntity = petRepository.findById(petId);
-		if (petEntity.isEmpty())
-			throw new EntityNotFoundException("mascota no encontrada");
-		log.info("Termina proceso de consultar la mascota con id = {0}", petId);
-		return petEntity.get();
-	}
+    public PetEntity getPet(Long petId) throws EntityNotFoundException {
+        log.info("Inicia proceso de consula de la mascota", petId);
+        Optional<PetEntity> petEntity = petRepository.findById(petId);
+        if (petEntity.isEmpty()) {
+            throw new EntityNotFoundException("mascota no encontrada");
+        }
+        log.info("Termina proceso de consultar la mascota con id = {0}", petId);
+        return petEntity.get();
+    }
 
     private boolean isStringValid(String texto) {
         return !(texto == null || texto.isEmpty());
+    }
+
+    @Transactional
+    public List<PetEntity> searchPets(String keyword, List<String> filters) {
+        String species = null;
+        Integer minAge = null;
+        Integer maxAge = null;
+        String size = null;
+        String requirements = null;
+
+        if (filters != null) {
+            for (String filter : filters) {
+                // Especie
+                if (filter.equalsIgnoreCase("Perro")
+                        || filter.equalsIgnoreCase("Gato")
+                        || filter.equalsIgnoreCase("Otros")) {
+                    species = filter;
+                }
+
+                // Edad
+                switch (filter) {
+                    case "Cachorros" -> {
+                        minAge = 0;
+                        maxAge = 2;
+                    }
+                    case "Jovenes" -> {
+                        minAge = 2;
+                        maxAge = 5;
+                    }
+                    case "Adultos" -> {
+                        minAge = 5;
+                        maxAge = 10;
+                    }
+                    case "Senior" -> {
+                        minAge = 10;
+                        maxAge = null;
+                    }
+                }
+
+                // Tamaño
+                if (filter.equalsIgnoreCase("Pequeño")
+                        || filter.equalsIgnoreCase("Mediano")
+                        || filter.equalsIgnoreCase("Grande")) {
+                    size = filter;
+                }
+
+                // Requerimientos
+                if (filter.equalsIgnoreCase("Casa")
+                        || filter.equalsIgnoreCase("Apartamento")) {
+                    requirements = filter;
+                }
+            }
+        }
+
+        return petRepository.searchByKeywordAndFilters(
+                keyword != null ? keyword : "",
+                species,
+                minAge,
+                maxAge,
+                size,
+                requirements
+        );
     }
 
 }
