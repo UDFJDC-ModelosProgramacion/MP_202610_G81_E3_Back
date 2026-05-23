@@ -27,6 +27,7 @@ public class PetEntity extends BaseEntity {
     private String temperament;
     private LocalDate arriveToShelterDate;
     private String specificRequirements;
+    private String requiredSpace;
 
     @Column(length = 1000000)
     private String image;

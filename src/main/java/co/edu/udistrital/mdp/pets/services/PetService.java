@@ -28,6 +28,7 @@ public class PetService {
         if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) 
                 && isStringValid(petEntity.getBreed()) && isStringValid(petEntity.getSex()) 
                 && isStringValid(petEntity.getSize()) 
+                && isStringValid(petEntity.getRequiredSpace())
                 && petEntity.getArriveToShelterDate() != null
                 && isStringValid(petEntity.getSpecificRequirements())) {
             return petRepository.save(petEntity);
@@ -79,6 +80,10 @@ public class PetService {
         if (petEntity.getSpecificRequirements() != null) {
             existingPet.setSpecificRequirements(petEntity.getSpecificRequirements());
         }
+        
+        if (petEntity.getRequiredSpace() != null) {
+            existingPet.setRequiredSpace(petEntity.getRequiredSpace());
+        }
 
         log.info("Termina proceso de actualización de mascota (Pet)");
         return petRepository.save(existingPet);
@@ -124,6 +129,7 @@ public class PetService {
         Integer maxAge = null;
         String size = null;
         String requirements = null;
+        String requiredSpace = null;
 
         if (filters != null) {
             for (String filter : filters) {
@@ -164,7 +170,7 @@ public class PetService {
                 // Requerimientos
                 if (filter.equalsIgnoreCase("Casa")
                         || filter.equalsIgnoreCase("Apartamento")) {
-                    requirements = filter;
+                    requiredSpace = filter;
                 }
             }
         }
@@ -175,7 +181,8 @@ public class PetService {
                 minAge,
                 maxAge,
                 size,
-                requirements
+                requirements,
+                requiredSpace
         );
     }
 }

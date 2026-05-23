@@ -23,4 +23,5 @@ public class PetDTO {
     private String image;
     
     private ShelterDTO shelter;
+    private String requiredSpace;
 }
