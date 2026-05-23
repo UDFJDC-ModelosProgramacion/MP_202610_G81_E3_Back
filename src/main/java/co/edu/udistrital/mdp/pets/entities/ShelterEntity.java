@@ -3,6 +3,7 @@ package co.edu.udistrital.mdp.pets.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
@@ -17,6 +18,8 @@ public class ShelterEntity extends BaseEntity {
     private String city;
     private String address;
     private String email;
+    
+    @Column(length = 1000000)
     private String image;
 
     @PodamExclude

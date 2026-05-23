@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class PetDTO {
-    private Long id;  // ← agrega esta línea
+    private Long id;
     private String name;
     private String species;
     private String breed;
@@ -20,7 +20,8 @@ public class PetDTO {
     private String specificRequirements;
     private PetState petState;
     private ArriveToShelter arriveToShelter;
-
-    //falta folloupDTO
-    //falta un shelter
+    private String image;
+    
+    private ShelterDTO shelter;
+    private String requiredSpace;
 }
