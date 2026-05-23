@@ -14,6 +14,4 @@ public class PetDetailDTO extends PetDTO{
     private List<MediaFileDTO> photographs=new ArrayList<>();
     private List<BackgroundDTO>backgrounds=new ArrayList<>();
     private String shelterName;
-
-    //faltan las adoptions
 }

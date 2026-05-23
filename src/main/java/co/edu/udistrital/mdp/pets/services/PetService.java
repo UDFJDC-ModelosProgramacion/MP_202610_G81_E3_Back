@@ -22,17 +22,14 @@ public class PetService {
 
     @Transactional
     public PetEntity createPet(PetEntity petEntity) throws EntityNotFoundException, IllegalOperationException {
-
         if (petEntity.getShelter() == null || petEntity.getShelter().getId() == null) {
             throw new IllegalOperationException("La mascota debe estar asociada a un refugio");
         }
-
         if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) 
                 && isStringValid(petEntity.getBreed()) && isStringValid(petEntity.getSex()) 
                 && isStringValid(petEntity.getSize()) 
                 && petEntity.getArriveToShelterDate() != null
                 && isStringValid(petEntity.getSpecificRequirements())) {
-
             return petRepository.save(petEntity);
         } else {
             throw new IllegalOperationException("Todos los campos tienen que estar llenos");
