@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
+
 
 @Data
 @Entity
@@ -25,6 +27,9 @@ public class PetEntity extends BaseEntity {
     private String temperament;
     private LocalDate arriveToShelterDate;
     private String specificRequirements;
+
+    @Column(length = 1000000)
+    private String image;
 
     @PodamExclude
     @OneToMany(mappedBy = "pet")

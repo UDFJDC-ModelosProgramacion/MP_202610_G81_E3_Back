@@ -1,9 +1,9 @@
 package co.edu.udistrital.mdp.pets.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,19 +39,17 @@ public class PetController {
     @ResponseStatus(code = HttpStatus.OK)
     public List<PetDetailDTO> findAll() {
         List<PetEntity> pets = petService.getPets();
-        return modelMapper.map(pets, new TypeToken<List<PetDetailDTO>>() {
-        }.getType());
+        return pets.stream().map(this::toPetDetailDTO).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public PetDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
-        PetEntity petEntity = petService.getPet(id);
-        return modelMapper.map(petEntity, PetDetailDTO.class);
+        return toPetDetailDTO(petService.getPet(id));
     }
 
     @PostMapping
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(code = HttpStatus.CREATED)
     public PetDTO create(@RequestBody PetDTO petDTO) throws IllegalOperationException, EntityNotFoundException {
         PetEntity petEntity = petService.createPet(modelMapper.map(petDTO, PetEntity.class));
         return modelMapper.map(petEntity, PetDTO.class);
@@ -62,21 +60,28 @@ public class PetController {
     public PetDTO update(@PathVariable Long id, @RequestBody PetDTO petDTO) throws EntityNotFoundException {
         PetEntity petEntity = petService.updatePet(id, modelMapper.map(petDTO, PetEntity.class));
         return modelMapper.map(petEntity, PetDTO.class);
-
     }
 
     @DeleteMapping(value = "/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
-    public void delete(@PathVariable Long id) throws EntityNotFoundException, IllegalOperationException {
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id)throws EntityNotFoundException, IllegalOperationException {
         petService.deletePet(id);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<PetEntity>> searchPets(
+    public ResponseEntity<List<PetDetailDTO>> searchPets(
             @RequestParam(required = false, defaultValue = "") String keyword,
-            @RequestParam(required = false) List<String> filter // recibe filter=Perro&filter=Gato
-    ) {
+            @RequestParam(required = false) List<String> filter) {
         List<PetEntity> resultado = petService.searchPets(keyword, filter);
-        return ResponseEntity.ok(resultado);
+        List<PetDetailDTO> dtos = resultado.stream().map(this::toPetDetailDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
+    private PetDetailDTO toPetDetailDTO(PetEntity pet) {
+        PetDetailDTO dto = modelMapper.map(pet, PetDetailDTO.class);
+        if (pet.getShelter() != null) {
+            dto.setShelterName(pet.getShelter().getName());
+        }
+        return dto;
     }
 }

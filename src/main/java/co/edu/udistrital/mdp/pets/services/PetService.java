@@ -22,17 +22,20 @@ public class PetService {
 
     @Transactional
     public PetEntity createPet(PetEntity petEntity) throws EntityNotFoundException, IllegalOperationException {
-        log.info("Inicia proceso de creacion de mascota (Pet)");
 
-        //revisa que la mascota tenga todos los datos llenos
-        if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) && isStringValid(petEntity.getBreed())
-                && isStringValid(petEntity.getSex()) && isStringValid(petEntity.getSize()) && petEntity.getArriveToShelterDate() != null
+        if (petEntity.getShelter() == null || petEntity.getShelter().getId() == null) {
+            throw new IllegalOperationException("La mascota debe estar asociada a un refugio");
+        }
+
+        if (isStringValid(petEntity.getName()) && isStringValid(petEntity.getSpecies()) 
+                && isStringValid(petEntity.getBreed()) && isStringValid(petEntity.getSex()) 
+                && isStringValid(petEntity.getSize()) 
+                && petEntity.getArriveToShelterDate() != null
                 && isStringValid(petEntity.getSpecificRequirements())) {
 
             return petRepository.save(petEntity);
-
         } else {
-            throw new IllegalOperationException("todos los campos tienen que estar llenos");
+            throw new IllegalOperationException("Todos los campos tienen que estar llenos");
         }
 //&& !petEntity.getPhotographes().isEmpty()
     }
@@ -178,5 +181,4 @@ public class PetService {
                 requirements
         );
     }
-
 }
