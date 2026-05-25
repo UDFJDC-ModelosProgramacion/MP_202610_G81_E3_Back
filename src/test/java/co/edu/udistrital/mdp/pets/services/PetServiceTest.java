@@ -1,0 +1,69 @@
+package co.edu.udistrital.mdp.pets.services;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
+
+import co.edu.udistrital.mdp.pets.entities.MediaFileEntity;
+import co.edu.udistrital.mdp.pets.entities.PetEntity;
+import co.edu.udistrital.mdp.pets.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.pets.exceptions.IllegalOperationException;
+import jakarta.transaction.Transactional;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
+
+@DataJpaTest
+@Transactional
+@Import(PetService.class)
+ class PetServiceTest {
+
+    @Autowired
+    private PetService petService;
+
+    @Autowired
+    private TestEntityManager entityManager;
+    private PodamFactory factory = new PodamFactoryImpl();
+    private List<PetEntity> petList = new ArrayList<>();
+
+    @BeforeEach
+    void setUp() {
+        clearData();
+        insertData();
+    }
+
+    private void clearData() {
+        entityManager.getEntityManager().createQuery("delete from PetEntity").executeUpdate();
+    }
+
+    private void insertData() {
+        for (int i = 0; i < 3; i++) {
+            PetEntity pet = factory.manufacturePojo(PetEntity.class);
+            entityManager.persist(pet);
+            petList.add(pet);
+        }
+    }
+
+    @Test
+    public void testCreatePet() throws EntityNotFoundException, IllegalOperationException {
+        PetEntity newPet = factory.manufacturePojo(PetEntity.class);
+
+        // Se prueba con datos específicos para asegurar que se guardan en la base de datos.
+        newPet.setName("Bingo");
+        newPet.setSpecies("Perro");
+        newPet.setBreed("Labrador");
+        newPet.setSex("Macho");
+        newPet.setSize("grande");
+        newPet.setArriveToShelterDate(LocalDate.now());
+        newPet.setSpecificRequirements("Ninguno");
+
+        newPet.setPhotographs(new ArrayList<>());
+        newPet.getPhotographs().add(new MediaFileEntity());
+    }
+}
