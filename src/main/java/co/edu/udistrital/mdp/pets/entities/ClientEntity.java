@@ -1,27 +1,18 @@
 package co.edu.udistrital.mdp.pets.entities;
 
-// ===== IMPORTS INICIO =====
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import lombok.Data;
-// ===== IMPORTS FIN =====
+import lombok.EqualsAndHashCode;
 
-
-// ===== DEFINICIÓN DE CLASE INICIO =====
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ClientEntity extends BaseEntity {
-// ===== DEFINICIÓN DE CLASE FIN =====
 
-
-    // ===== ATRIBUTOS INICIO =====
     private String clientName;
     private String clientPhone;
     private String clientEmail;
-    // ===== ATRIBUTOS FIN =====
-
-
-    // ===== RELACIONES INICIO =====
-    // (Sin relaciones - modelo simplificado)
-    // ===== RELACIONES FIN =====
-
 }
